@@ -1,6 +1,8 @@
 import { render } from '@testing-library/react';
 import { Component } from 'react/cjs/react.production.min';
 import './App.css';
+import {BookList} from './components/book-list/Booklist' 
+import {Book} from './components/book/Book'
 
 class App extends Component{
 
@@ -9,21 +11,32 @@ class App extends Component{
 
     this.state ={
       books: [],
-      titles: {},
       searchField: ''
     };
   }
 
   componentDidMount(){
     // randomly generate a number, such that a book will be randomly selected
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
     
     fetch(URL)
     .then(response => response.json())
     .then(response => this.setState({books:response.results[0]}))
-    // .then(response => console.log('response:', response.results[0].title))
+    // .then(response => console.log('response:', response.results[0]))
     // .then(title => this.setState({titles: title}))
+  }
+
+  handleClick() {
+    console.log('this is:', this);
+
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
+    
+    fetch(URL)
+    .then(response => response.json())
+    .then(response => this.setState({books:response.results[0]}))
+
   }
   
   render(){
@@ -33,7 +46,8 @@ class App extends Component{
 
     return (
       <div className="App">
-            <h5>{books.title}</h5>
+            <Book books={books}/>
+            <button onClick={() => this.handleClick()}>Next</button>
       </div>
     );
   }
