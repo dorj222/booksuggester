@@ -15,14 +15,17 @@ class App extends Component{
   }
 
   componentDidMount(){
-    const baseURL = 'https://gutendex.com/books/?ids=1';
-    fetch(baseURL)
+    // randomly generate a number, such that a book will be randomly selected
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
+    
+    fetch(URL)
     .then(response => response.json())
     .then(response => this.setState({books:response.results[0]}))
     // .then(response => console.log('response:', response.results[0].title))
     // .then(title => this.setState({titles: title}))
   }
-
+  
   render(){
     // const title = this.state.books.title;
     const books = this.state.books;
@@ -30,7 +33,7 @@ class App extends Component{
 
     return (
       <div className="App">
-            <h1>{books.title}</h1>
+            <h5>{books.title}</h5>
       </div>
     );
   }
