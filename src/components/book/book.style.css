@@ -10,7 +10,8 @@
     backface-visibility: hidden;
     transform: translateZ(0);
     transition: transform 0.25s ease-out;
-    min-width: 200px;
+    width: 200px;
+    min-height: 350px;
     margin: 0 auto;
     align-items: center;
     justify-content: center;

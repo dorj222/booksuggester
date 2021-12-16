@@ -8,3 +8,10 @@
   justify-content: center;
 }
 
+.btnContainer{
+  margin-top: 20px;
+}
+
+button{
+  margin-right: 12px;
+}

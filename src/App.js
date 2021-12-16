@@ -1,8 +1,10 @@
 import { render } from '@testing-library/react';
+// import { Button } from 'bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Component } from 'react/cjs/react.production.min';
 import './App.css';
-import {BookList} from './components/book-list/Booklist' 
-import {Book} from './components/book/Book'
+import {BookList} from './components/book-list/Booklist'; 
+import {Book} from './components/book/Book';
 
 class App extends Component{
 
@@ -27,8 +29,7 @@ class App extends Component{
 
     fetch(URL)
       .then(response => response.json())
-      .then(
-        
+      .then( 
         (response) => {this.setState({ 
         books: response.results[0],
         title: response.results[0].title,
@@ -40,10 +41,7 @@ class App extends Component{
           isLoaded: true,
           error
         });
-      }
-      
-      )
-  }
+      })}
 
   handleClick() {
     this.callAPI();
@@ -61,7 +59,13 @@ class App extends Component{
     return (
       <div className="App">
             <Book title={title} authors={authors} books={books}/>
-            <button onClick={() => this.handleClick()}>Next</button>
+            
+            <div className='btnContainer'>
+                <button id="btnAbout" onClick={() => this.handleClick()}>Learn more</button>
+                <button id="btnBookMark" onClick={() => this.handleClick()}>Bookmark</button>
+                <button id="btnNext" onClick={() => this.handleClick()}>Next</button>
+            </div>
+           
       </div>
     );
   }
