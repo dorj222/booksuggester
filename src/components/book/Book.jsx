@@ -4,7 +4,7 @@ import './book.style.css'
 
 export const Book = (props) => (
     <div className="card-container">
-        <h2> {props.books.title} </h2>
-        {/* <p>{props}</p> */}
+        <h3> {props.title} </h3>
+        <h3>{props.authors}</h3>
     </div>
 )

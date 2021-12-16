@@ -11,42 +11,56 @@ class App extends Component{
 
     this.state ={
       books: [],
-      searchField: ''
+      searchField: '',
+      authors: [],
+      title: ''
     };
   }
 
   componentDidMount(){
-    // randomly generate a number, such that a book will be randomly selected
-    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    this.callAPI();
+  }
+
+  callAPI() {
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
-    
+
     fetch(URL)
-    .then(response => response.json())
-    .then(response => this.setState({books:response.results[0]}))
-    // .then(response => console.log('response:', response.results[0]))
-    // .then(title => this.setState({titles: title}))
+      .then(response => response.json())
+      .then(
+        
+        (response) => {this.setState({ 
+        books: response.results[0],
+        title: response.results[0].title,
+        authors: response.results[0].authors[0].name
+      })
+    }, 
+      (error) =>{
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+      
+      )
   }
 
   handleClick() {
-    console.log('this is:', this);
-
-    const randomNumber = Math.floor(Math.random() * 10) + 1;
-    let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
-    
-    fetch(URL)
-    .then(response => response.json())
-    .then(response => this.setState({books:response.results[0]}))
-
+    this.callAPI();
   }
   
   render(){
     // const title = this.state.books.title;
     const books = this.state.books;
     console.log('books render: ', books);
+    const authors = this.state.authors;
+    console.log('books authors: ', authors);
+    const title = this.state.title;
+    console.log('title:', title);
 
     return (
       <div className="App">
-            <Book books={books}/>
+            <Book title={title} authors={authors} books={books}/>
             <button onClick={() => this.handleClick()}>Next</button>
       </div>
     );
