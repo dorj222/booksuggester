@@ -1,10 +1,16 @@
 import React from 'react';
 import './book.style.css'
 
-
 export const Book = (props) => (
-    <div className="card-container">
-        <h3> {props.title} </h3>
-        <h3>by {props.authors}</h3>
+    
+    <div 
+        className="card-container"
+        style={{ backgroundColor: 
+        "rgb("+`${Math.floor(Math.random() * 100)+155}`+ 
+        "," + `${Math.floor(Math.random() * 100)+155}` + 
+        "," + `${Math.floor(Math.random() * 100)+155}` +")"}}
+    >
+        <h2> {props.title} </h2>
+        <h7>{props.authors}</h7>
     </div>
-)
+);

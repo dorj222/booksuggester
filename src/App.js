@@ -61,8 +61,8 @@ class App extends Component{
             <Book title={title} authors={authors} books={books}/>
             
             <div className='btnContainer'>
-                <button id="btnAbout" onClick={() => this.handleClick()}>Learn more</button>
-                <button id="btnBookMark" onClick={() => this.handleClick()}>Bookmark</button>
+                <button id="btnAbout">Learn more</button>
+                <button id="btnBookMark">Bookmark</button>
                 <button id="btnNext" onClick={() => this.handleClick()}>Next</button>
             </div>
            
