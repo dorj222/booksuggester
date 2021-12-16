@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faForward, faHeart, faBookmark, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { render } from '@testing-library/react';
 // import { Button } from 'bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -5,6 +7,7 @@ import { Component } from 'react/cjs/react.production.min';
 import './App.css';
 import {BookList} from './components/book-list/Booklist'; 
 import {Book} from './components/book/Book';
+
 
 class App extends Component{
 
@@ -61,9 +64,18 @@ class App extends Component{
             <Book title={title} authors={authors} books={books}/>
             
             <div className='btnContainer'>
-                <button id="btnAbout">Learn more</button>
-                <button id="btnBookMark">Bookmark</button>
-                <button id="btnNext" onClick={() => this.handleClick()}>Next</button>
+                <button id="btnAbout">
+                    more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
+                </button>
+
+                <button id="btnBookMark">
+                    save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+                </button>
+
+                <button id="btnNext" onClick={() => 
+                  this.handleClick()}>
+                    next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
+                    </button>
             </div>
            
       </div>

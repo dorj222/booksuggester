@@ -13,5 +13,31 @@
 }
 
 button{
-  margin-right: 12px;
+  margin-right: 5px;
+  background-color: #f6834f; /* Green */
+  border: none;
+  border-radius: 10px;
+  color: black;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  /* border: 2px solid #4CAF50; Green */
 }
+
+/* button:hover{
+  background-color: bisque
+} */
+
+
+button:hover {
+  transition: 0.3s ease-in-out;
+  background: bisque;
+  text-decoration: underline;
+  /* border: 1px dashed black; */
+}
+
