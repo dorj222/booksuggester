@@ -3,14 +3,16 @@ import './book.style.css'
 
 export const Book = (props) => (
     
-    <div 
+    <div
         className="card-container"
-        style={{ backgroundColor: 
-        "rgb("+`${Math.floor(Math.random() * 100)+155}`+ 
-        "," + `${Math.floor(Math.random() * 100)+155}` + 
-        "," + `${Math.floor(Math.random() * 100)+155}` +")"}}
+        style={{backgroundColor: props.background}}
     >
         <h2> {props.title} </h2>
-        <h7>{props.authors}</h7>
+        
+        <h7>{props.titleWithAuthor}</h7>
+        <h7>{props.subject}</h7>
+        <h7>{props.genre}</h7>
+        <h8>{props.authors}</h8>
+        
     </div>
 );
