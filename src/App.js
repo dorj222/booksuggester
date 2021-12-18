@@ -21,9 +21,9 @@ class App extends Component{
       title: '',
       subject: '',
       genre: '',
-      titleWithAuthor: '',
       background: '',
-      isBtnMoreClicked: false
+      hasBtnMoreClicked: false,
+      hasBtnNextClicked: false
     };
   }
 
@@ -41,9 +41,9 @@ class App extends Component{
         (response) => {this.setState({ 
         books: response.results[0],
         title: response.results[0].title,
-        authors: response.results[0].authors[0].name,
-        subject: "",
-        genre: "",
+        authors: response.results[0].authors[0],
+        subject: response.results[0].subjects[0],
+        genre: response.results[0].bookshelves[0],
         background: this.generateBackground(),
       })
     },  (error) =>{
@@ -56,36 +56,24 @@ class App extends Component{
 
   handleClick() {
     this.callAPI();
-    this.setState({
-      subject: "",
-      genre: "",
-      titleWithAuthor: "",
-      isBtnMoreClicked: false
-    })
+
+      this.setState({
+        hasBtnMoreClicked: false,
+        hasBtnNextClicked: true
+      })
+
   }
 
   handleClickDetail(){
 
-    if(!this.state.isBtnMoreClicked){
+    if(!this.state.hasBtnMoreClicked){
     this.setState({
-      title: null,
-      authors: null,
-      background: this.state.background,
-      titleWithAuthor: this.state.title + " by " + this.state.authors,
-      subject: "Subject: " + this.state.books.subjects[0],
-      genre: "Genre: " + this.state.books.bookshelves[0],
-      isBtnMoreClicked: true
+      hasBtnMoreClicked: true,
         }
       )}  
     else{
       this.setState({
-        title: this.state.books.title,
-        authors: this.state.books.authors[0].name,
-        background: this.state.background,
-        titleWithAuthor: "",
-        subject: "",
-        genre: "",
-        isBtnMoreClicked: false
+        hasBtnMoreClicked: false,
           }
         )}
   }
@@ -106,27 +94,29 @@ class App extends Component{
     const authors = this.state.authors;
     // console.log('books authors: ', authors);
     const title = this.state.title;
-    // console.log('title:', title);
     const subject = this.state.subject;
     const genre = this.state.genre;
-    const titleWithAuthor = this.state.titleWithAuthor;
     const background = this.state.background;
+    let  hasBtnMoreClicked = this.state.hasBtnMoreClicked;
+    let  hasBtnNextClicked = this.state.hasBtnNextClicked;
 
     return (
       <div className="App">
 
-            <Book title={title} 
+            <Book
+            title={title} 
             authors={authors} 
             books={books} 
             subject={subject} 
             genre={genre}
-            titleWithAuthor={titleWithAuthor}
             background={background}
-            onClick={() => this.handleClickDetail()}
+            hasBtnMoreClicked={hasBtnMoreClicked}
+            hasBtnNextClicked={hasBtnNextClicked}
             />
 
             <div className='btnContainer'>
-                <button id="btnAbout" onClick={() => this.handleClickDetail()}>
+
+                <button id="btnAbout" onClick={() => this.handleClickDetail()} >
                     more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
                 </button>
 
@@ -136,12 +126,12 @@ class App extends Component{
 
                 <button id="btnNext" onClick={() => this.handleClick()}>
                     next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
-                </button>
+                 </button>
+
             </div>
       </div>
     );
   }
-
 }
 
 export default App;

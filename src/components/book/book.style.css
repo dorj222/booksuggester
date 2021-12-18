@@ -15,7 +15,7 @@
     width: 200px;
     min-height: 350px;
     margin: 0 auto;
-    align-items: center;
+    /* align-items: center; */
     justify-content: space-around;
     box-shadow: 4px 1.8px #888888;
   }
@@ -25,11 +25,14 @@
     transition: transform 0.4s ease-out;
   }
   
-  h7{
-    text-align: left !important;
-    margin-left: 0;
-    padding-left: 0;
-    font-size: 15px;
-    align-items: left !important;
+  span{
+    color: black;
+    text-align: start !important;
+    font-size: 13px;
+    margin-bottom: 7px;
+  }
 
+
+  .detail{
+    justify-content: center;
   }
