@@ -20,12 +20,10 @@ class App extends Component{
       authors: [],
       title: '',
       subject: '',
-      subjectTemp: '',
       genre: '',
-      genreTemp: '',
       titleWithAuthor: '',
-      titleWithAuthorTemp: '',
-      background: ''
+      background: '',
+      isBtnMoreClicked: false
     };
   }
 
@@ -44,8 +42,8 @@ class App extends Component{
         books: response.results[0],
         title: response.results[0].title,
         authors: response.results[0].authors[0].name,
-        subject: response.results[0].subjects,
-        genre: response.results[0].bookshelves,
+        subject: "",
+        genre: "",
         background: this.generateBackground()
       })
     }, 
@@ -61,23 +59,43 @@ class App extends Component{
 
   handleClick() {
     this.callAPI();
+    // console.log("handleClickDetail: ", String(this.isBtnMoreClicked));
+    console.log("handleClickDetail: ", this.isBtnMoreClicked);
     this.setState({
-      subjectTemp: "",
-      genreTemp: "",
-      titleWithAuthorTemp: ""
+      subject: "",
+      genre: "",
+      titleWithAuthor: "",
+      isBtnMoreClicked: false
     })
+    
   }
 
   handleClickDetail(){
+
+    // console.log("handleClickDetail: ", String(this.isBtnMoreClicked));
+    // if(this.isBtnMoreClicked === false){
     this.setState({
       title: null,
       authors: null,
       background: this.state.background,
-      titleWithAuthorTemp: this.state.title + " by " + this.state.authors,
-      subjectTemp: "Subject: " + this.state.subject[0],
-      genreTemp: "Genre: " + this.state.genre
-    }
-    )
+      titleWithAuthor: this.state.title + " by " + this.state.authors,
+      subject: "Subject: " + this.state.books.subjects[0],
+      genre: "Genre: " + this.state.books.bookshelves[0],
+      isBtnMoreClicked: true
+        }
+      )
+    // }else{
+    //   this.setState({
+    //     title: this.state.books.title,
+    //     authors: this.state.books.authors[0].name,
+    //     background: this.state.background,
+    //     titleWithAuthor: "www",
+    //     subject: "",
+    //     genre: "",
+    //     isBtnMoreClicked: false
+    //       }
+    //     )
+    // }
   }
 
   generateBackground() {
@@ -94,12 +112,12 @@ class App extends Component{
     const books = this.state.books;
     console.log('books render: ', books);
     const authors = this.state.authors;
-    console.log('books authors: ', authors);
+    // console.log('books authors: ', authors);
     const title = this.state.title;
-    console.log('title:', title);
-    const subjectTemp = this.state.subjectTemp;
-    const genreTemp = this.state.genreTemp;
-    const titleWithAuthorTemp = this.state.titleWithAuthorTemp;
+    // console.log('title:', title);
+    const subject = this.state.subject;
+    const genre = this.state.genre;
+    const titleWithAuthor = this.state.titleWithAuthor;
     const background = this.state.background;
     // let background = this.generateBackground();
 
@@ -108,9 +126,9 @@ class App extends Component{
             <Book title={title} 
             authors={authors} 
             books={books} 
-            subject={subjectTemp} 
-            genre={genreTemp}
-            titleWithAuthor={titleWithAuthorTemp}
+            subject={subject} 
+            genre={genre}
+            titleWithAuthor={titleWithAuthor}
             background={background}
             />
             {/* <Detail title={title} authors={authors} books={books}/> */}
