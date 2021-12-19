@@ -17,7 +17,7 @@ class App extends Component{
     this.state ={
       books: [],
       searchField: '',
-      authors: [],
+      authors: '',
       title: '',
       subject: '',
       genre: '',
@@ -41,7 +41,7 @@ class App extends Component{
         (response) => {this.setState({ 
         books: response.results[0],
         title: response.results[0].title,
-        authors: response.results[0].authors[0],
+        authors: this.getAuthors(response.results[0].authors),
         subject: response.results[0].subjects[0],
         genre: response.results[0].bookshelves[0],
         background: this.generateBackground(),
@@ -52,6 +52,22 @@ class App extends Component{
           error
         });
       })
+  }
+
+  getAuthors(response) {
+    let fullName = ""
+    response.map( function(x){
+        console.log("response temp name: ", x.name + " type of: " + typeof(x.name));
+        const countComma = (x.name.match(/,/g) || []).length;
+        if(x.name.includes(", ") && !x.name.includes("(") && !x.name.includes(")") && (countComma === 1)){
+          let nameArray = x.name.split(', ');
+          fullName = nameArray[1] + " " + nameArray[0]
+        }else{
+          fullName = x.name;
+        }
+        return fullName;
+      });
+    return fullName;
   }
 
   handleClick() {
@@ -92,7 +108,7 @@ class App extends Component{
   render(){
     // const title = this.state.books.title;
     const books = this.state.books;
-    // console.log('books render: ', books);
+    console.log('books render: ', books);
     const authors = this.state.authors;
     // console.log('books authors: ', authors);
     const title = this.state.title;

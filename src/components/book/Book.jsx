@@ -31,15 +31,14 @@ class Book extends React.Component {
             style={divStyleDetail}
             className='detail'>
                 <span className="detail"> {"The title: " + this.props.title} </span>
-                <span className="detail">{"Authors: " + this.props.authors.name}</span>
-                <span className="detail">{this.props.titleWithAuthor}</span>
+                <span className="detail">{"Authors: " + this.props.authors}</span>
                 <span className="detail">{"Subject: " + this.props.subject}</span>
                 <span className="detail">{"Category: " + this.props.genre}</span>
             </div>
           
              <h5
              style={divStyleCover}
-             >{this.props.authors.name}</h5>
+             >{this.props.authors}</h5>
         </div>
       );
 
