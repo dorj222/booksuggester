@@ -15,7 +15,7 @@
     width: 200px;
     min-height: 350px;
     margin: 0 auto;
-    /* align-items: center; */
+    align-items: center;
     justify-content: space-around;
     box-shadow: 4px 1.8px #888888;
   }
@@ -26,6 +26,7 @@
   }
   
   span{
+    /* display: none; */
     color: black;
     text-align: start !important;
     font-size: 13px;
@@ -35,4 +36,8 @@
 
   .detail{
     justify-content: center;
+    align-items: flex-start;
+    
   }
+
+

@@ -69,10 +69,12 @@ class App extends Component{
     if(!this.state.hasBtnMoreClicked){
     this.setState({
       hasBtnMoreClicked: true,
+      hasBtnNextClicked: false,
         }
       )}  
     else{
       this.setState({
+        hasBtnMoreClicked: false,
         hasBtnMoreClicked: false,
           }
         )}
@@ -104,6 +106,7 @@ class App extends Component{
       <div className="App">
 
             <Book
+            style={this.state.showMyComponent ? {} : { display: 'none' }}
             title={title} 
             authors={authors} 
             books={books} 
