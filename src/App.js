@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faForward, faHeart, faBookmark, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { render } from '@testing-library/react';
-// import { Button } from 'bootstrap';
 import Button from 'react-bootstrap/Button';
 import { Component } from 'react/cjs/react.production.min';
 import './App.css';
@@ -42,8 +41,8 @@ class App extends Component{
         books: response.results[0],
         title: response.results[0].title,
         authors: this.getAuthors(response.results[0].authors),
-        subject: response.results[0].subjects[0],
-        genre: response.results[0].bookshelves[0],
+        subject: this.getSubjects(response.results[0].subjects),
+        genre: this.getGenre(response.results[0].bookshelves),
         background: this.generateBackground(),
       })
     },  (error) =>{
@@ -54,14 +53,49 @@ class App extends Component{
       })
   }
 
+  getGenre(response) {
+    let tempGenre = ""
+    response.map(function(item, index){
+      if(index < 3){
+        
+        if(index + 1 === response.length || index + 1 === 3){
+          tempGenre = tempGenre + item;
+        }else{
+          tempGenre = tempGenre  + item + ", "
+        }
+      }
+    })
+    return tempGenre;
+  }
+
+  getSubjects(subject) {
+    let tempSubject = "";
+    subject.map(function(item, index){
+    if(index < 2){
+      item = item.replace(/--/g,'');
+
+      if(index + 1 === subject.length || index + 1 === 2){
+        tempSubject = tempSubject + item;
+      }else{
+        tempSubject = tempSubject + item + "; ";
+      }
+    }
+    return item;
+    })
+    return tempSubject;
+  }
+
   getAuthors(response) {
-    let fullName = ""
-    response.map( function(x){
-        console.log("response temp name: ", x.name + " type of: " + typeof(x.name));
+    let fullName = "";
+    fullName = response.map( function(x, index){
         const countComma = (x.name.match(/,/g) || []).length;
-        if(x.name.includes(", ") && !x.name.includes("(") && !x.name.includes(")") && (countComma === 1)){
+        if(!x.name.includes("(") && !x.name.includes(")") && (countComma === 1)){
           let nameArray = x.name.split(', ');
-          fullName = nameArray[1] + " " + nameArray[0]
+          if(index + 1 === response.length){
+            fullName = nameArray[1] + " " + nameArray[0]; 
+          }else{
+            fullName = nameArray[1] + " " + nameArray[0] + ", "
+          }
         }else{
           fullName = x.name;
         }
