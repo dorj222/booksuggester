@@ -35,9 +35,11 @@ button{
 
 
 button:hover {
-  transition: 0.3s ease-in-out;
+  transition: 0.2s ease-in-out;
   background: bisque;
   text-decoration: underline;
+  /* border-radius:50%; */
+  box-shadow: inset 0 0 0 3px #8a4b2e;;
   /* border: 1px dashed black; */
 }
 

@@ -22,7 +22,7 @@ class Book extends React.Component {
         <div
             className="card-container"
             style={{backgroundColor: this.props.background}}>
-             
+            
              <h2 
              style={divStyleCover}
              className='hasBtnMoreClicked'> {this.props.title} </h2>
@@ -30,10 +30,12 @@ class Book extends React.Component {
             <div 
             style={divStyleDetail}
             className='detail'>
-                <span className="detail"> {"The title: " + this.props.title} </span>
+                <span className="detail"> {"Title: " + this.props.title} </span>
                 <span className="detail">{"Authors: " + this.props.authors}</span>
                 <span className="detail">{"Subject: " + this.props.subject}</span>
                 <span className="detail">{"Category: " + this.props.genre}</span>
+                <span className="detail">{"Language: " + "English"}</span>
+                <span className="detail">{"Copyright status in the US: " + "Public domain"}</span>
             </div>
           
              <h5

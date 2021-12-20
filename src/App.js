@@ -7,7 +7,6 @@ import './App.css';
 import {BookList} from './components/book-list/Booklist'; 
 import {Book} from './components/book/Book';
 
-
 class App extends Component{
 
   constructor(){
@@ -31,7 +30,7 @@ class App extends Component{
   }
 
   callAPI() {
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    const randomNumber = Math.floor(Math.random() * 1000);
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
 
     fetch(URL)
@@ -41,8 +40,8 @@ class App extends Component{
         books: response.results[0],
         title: response.results[0].title,
         authors: this.getAuthors(response.results[0].authors),
-        subject: this.getSubjects(response.results[0].subjects),
-        genre: this.getGenre(response.results[0].bookshelves),
+        subject: this.getRepsonse(response.results[0].subjects),
+        genre: this.getRepsonse(response.results[0].bookshelves),
         background: this.generateBackground(),
       })
     },  (error) =>{
@@ -53,37 +52,41 @@ class App extends Component{
       })
   }
 
-  getGenre(response) {
-    let tempGenre = ""
+  getRepsonse(response) {
+    let tempResponse = "";
     response.map(function(item, index){
-      if(index < 3){
-        
-        if(index + 1 === response.length || index + 1 === 3){
-          tempGenre = tempGenre + item;
-        }else{
-          tempGenre = tempGenre  + item + ", "
-        }
-      }
-    })
-    return tempGenre;
-  }
-
-  getSubjects(subject) {
-    let tempSubject = "";
-    subject.map(function(item, index){
     if(index < 2){
       item = item.replace(/--/g,'');
-
-      if(index + 1 === subject.length || index + 1 === 2){
-        tempSubject = tempSubject + item;
+      if(index + 1 === response.length || index + 1 === 2){
+        tempResponse = tempResponse + item;
       }else{
-        tempSubject = tempSubject + item + "; ";
+        tempResponse = tempResponse + item + "; ";
       }
     }
     return item;
     })
-    return tempSubject;
+    return tempResponse;
   }
+
+  step(timestamp) {
+    const element = document.getElementByClass('card-container');
+    let start, previousTimeStamp;
+    if (start === undefined)
+      start = timestamp;
+    const elapsed = timestamp - start;
+  
+    if (previousTimeStamp !== timestamp) {
+      // Math.min() is used here to make sure the element stops at exactly 200px
+      const count = Math.min(0.1 * elapsed, 200);
+      element.style.transform = 'translateX(' + count + 'px)';
+    }
+  
+    if (elapsed < 2000) { // Stop the animation after 2 seconds
+      previousTimeStamp = timestamp
+      window.requestAnimationFrame(this.step);
+    }
+  }
+  
 
   getAuthors(response) {
     let fullName = "";
@@ -106,12 +109,10 @@ class App extends Component{
 
   handleClick() {
     this.callAPI();
-
-      this.setState({
+    this.setState({
         hasBtnMoreClicked: false,
         hasBtnNextClicked: true
       })
-
   }
 
   handleClickDetail(){
@@ -125,7 +126,7 @@ class App extends Component{
     else{
       this.setState({
         hasBtnMoreClicked: false,
-        hasBtnMoreClicked: false,
+        hasBtnNextClicked: false,
           }
         )}
   }
@@ -138,11 +139,13 @@ class App extends Component{
     background = `${"rgb(" + getRandomInt + "," + getRandomInt2 + "," + getRandomInt3 + ")"}`;    
     return background;
   }
+
+
   
   render(){
     // const title = this.state.books.title;
     const books = this.state.books;
-    console.log('books render: ', books);
+    // console.log('books render: ', books.copyright + " " + books.languages);
     const authors = this.state.authors;
     // console.log('books authors: ', authors);
     const title = this.state.title;
@@ -155,18 +158,17 @@ class App extends Component{
     return (
       <div className="App">
 
-            <Book
-            style={this.state.showMyComponent ? {} : { display: 'none' }}
-            title={title} 
-            authors={authors} 
-            books={books} 
-            subject={subject} 
-            genre={genre}
-            background={background}
-            hasBtnMoreClicked={hasBtnMoreClicked}
-            hasBtnNextClicked={hasBtnNextClicked}
-            />
-
+          <Book
+              title={title} 
+              authors={authors} 
+              books={books} 
+              subject={subject} 
+              genre={genre}
+              background={background}
+              hasBtnMoreClicked={hasBtnMoreClicked}
+              hasBtnNextClicked={hasBtnNextClicked}
+              />
+            
             <div className='btnContainer'>
 
                 <button id="btnAbout" onClick={() => this.handleClickDetail()} >

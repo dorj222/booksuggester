@@ -11,18 +11,21 @@
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
     transform: translateZ(0);
-    transition: transform 0.25s ease-out;
+    /* transition: transform 0.1s ease-in; */
     width: 200px;
     min-height: 350px;
     margin: 0 auto;
     align-items: center;
     justify-content: space-around;
     box-shadow: 4px 1.8px #888888;
+    transform: rotate(360deg);
+    transition: all 1s ease;
+    /* transition: background-color 1s, transform 2s; */
   }
   
   .card-container:hover {
-    transform: scale(1.03);
-    transition: transform 0.4s ease-out;
+    transform: scale(1.02);
+    transition: transform 0.5s ease-out;
   }
   
   span{
@@ -30,6 +33,7 @@
     color: black;
     text-align: start !important;
     font-size: 12px;
+    transition:all 1s ease;
     margin-bottom: 7px;
   }
 
