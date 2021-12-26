@@ -9,36 +9,6 @@
   /* justify-content: center; */
 }
 
-.btnContainer{
-  margin-top: 20px;
-}
-
-button{
-  margin-right: 5px;
-  background-color: bisque; 
-  border: none;
-  border-radius: 10px;
-  color: black;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  transition: 0.2s ease-in-out;
-  background: bisque;
-  text-decoration: underline;
-}
-
-.navbarBooks{
-  border-bottom: 1px solid black !important;
-}
-
 .homeContainer{
   display: flex;
   height: 100vh;

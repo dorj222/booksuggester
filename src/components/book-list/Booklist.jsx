@@ -1,7 +1,7 @@
 import React from 'react';
 // import './book-list.style.css';
 import {Book} from '../book/Book'
-
+import {NavbarComponent} from '../navbar/NavbarComponent'
 
 
 export const BookList = (props) => {
@@ -12,7 +12,10 @@ export const BookList = (props) => {
       ))} */
       
       <div className="div">
-                 <Book/>
+          
+                {/* <NavbarComponent/> */}
+                <h1>Hello world!</h1>
+                 {/* <Book/> */}
       </div>
      
       }
