@@ -37,7 +37,7 @@ class Book extends React.Component {
                 <span className="detail">{"Language: " + "English"}</span>
                 <span className="detail">{"Copyright status in the US: " + "Public domain"}</span>
             </div>
-          
+
              <h6
              style={divStyleCover}
              >{this.props.authors}</h6>

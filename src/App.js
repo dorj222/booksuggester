@@ -137,22 +137,8 @@ class App extends Component{
     return (
      
       <div className="App">
-         <Router>
+        <Router>
         <Navbar/>
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/book-list">Bookshelf</Link>
-            </li>
-          </ul>
-        </nav> */}
-
         <Switch>
           <Route exact path="/">
             <Home
@@ -170,7 +156,18 @@ class App extends Component{
           </Route>
 
           <Route exact path="/book-list">
-              <BookList/>
+              <BookList
+                        handleClickDetail={() => this.handleClickDetail()}
+                        handleClick={() => this.handleClick()}
+                        title={title} 
+                        authors={authors} 
+                        books={books} 
+                        subject={subject} 
+                        genre={genre}
+                        background={background}
+                        hasBtnMoreClicked={hasBtnMoreClicked}
+                        hasBtnNextClicked={hasBtnNextClicked}
+              />
           </Route>
             
         </Switch>

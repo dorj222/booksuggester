@@ -1,6 +1,6 @@
 /*  */
 .App {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   background-color: bisque;
@@ -9,10 +9,4 @@
   /* justify-content: center; */
 }
 
-.homeContainer{
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+
