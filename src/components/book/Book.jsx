@@ -5,8 +5,8 @@ class Book extends React.Component {
 
     render() {
 
-      let divStyleDetail ={ display: "none"};
-      let divStyleCover ={ display: "block"};
+      let divStyleDetail = { display: "none"};
+      let divStyleCover = { display: "block"};
 
       if(this.props.hasBtnMoreClicked){
         divStyleDetail = { display : "flex", flexDirection: "column"}
@@ -23,9 +23,9 @@ class Book extends React.Component {
             className="card-container"
             style={{backgroundColor: this.props.background}}>
             
-             <h2 
+             <h4 
              style={divStyleCover}
-             className='hasBtnMoreClicked'> {this.props.title} </h2>
+             className='hasBtnMoreClicked'> {this.props.title} </h4>
 
             <div 
             style={divStyleDetail}
@@ -38,9 +38,9 @@ class Book extends React.Component {
                 <span className="detail">{"Copyright status in the US: " + "Public domain"}</span>
             </div>
           
-             <h5
+             <h6
              style={divStyleCover}
-             >{this.props.authors}</h5>
+             >{this.props.authors}</h6>
         </div>
       );
 

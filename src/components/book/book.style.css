@@ -11,25 +11,21 @@
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
     transform: translateZ(0);
-    /* transition: transform 0.1s ease-in; */
-    width: 200px;
-    min-height: 350px;
+    width: 300px;
+    min-height: 480px;
     margin: 0 auto;
     align-items: center;
     justify-content: space-around;
     box-shadow: 4px 1.8px #888888;
-    transform: rotate(360deg);
     transition: all 1s ease;
-    /* transition: background-color 1s, transform 2s; */
   }
   
   .card-container:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     transition: transform 0.5s ease-out;
   }
   
   span{
-    /* display: none; */
     color: black;
     text-align: start !important;
     font-size: 12px;
@@ -40,8 +36,7 @@
 
   .detail{
     justify-content: center;
-    align-items: flex-start;
-    
+    align-items: flex-start; 
   }
 
 

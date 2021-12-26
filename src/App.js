@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward, faHeart, faBookmark, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faForward, faHeart, faBookmark, faInfoCircle, faBookOpen} from '@fortawesome/free-solid-svg-icons';
 import { render } from '@testing-library/react';
-import Button from 'react-bootstrap/Button';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Component } from 'react/cjs/react.production.min';
 import './App.css';
 import {BookList} from './components/book-list/Booklist'; 
@@ -30,7 +30,7 @@ class App extends Component{
   }
 
   callAPI() {
-    const randomNumber = Math.floor(Math.random() * 1000);
+    const randomNumber = Math.floor(Math.random() * 100);
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
 
     fetch(URL)
@@ -158,7 +158,23 @@ class App extends Component{
     return (
       <div className="App">
 
+        <div className='navbarBooks'>
+            <Navbar bg="transparent" variant="light">
+                <Container>
+                <Navbar.Brand href="#home">
+                  <FontAwesomeIcon icon={faBookOpen}></FontAwesomeIcon></Navbar.Brand>
+                <Nav className="me-auto">
+                  <Nav.Link href="#home">Home</Nav.Link>
+                  <Nav.Link href="#features">Bookshelf</Nav.Link>
+                  <Nav.Link href="#pricing">About</Nav.Link>
+                </Nav>
+                </Container>
+              </Navbar>
+        </div>
+
+        <div className="homeContainer">    
           <Book
+              onClick={() => this.handleClickDetail()}
               title={title} 
               authors={authors} 
               books={books} 
@@ -182,6 +198,8 @@ class App extends Component{
                 <button id="btnNext" onClick={() => this.handleClick()}>
                     next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
                  </button>
+
+            </div>
 
             </div>
       </div>
