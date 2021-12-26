@@ -66,27 +66,7 @@ class App extends Component{
     })
     return tempResponse;
   }
-
-  step(timestamp) {
-    const element = document.getElementByClass('card-container');
-    let start, previousTimeStamp;
-    if (start === undefined)
-      start = timestamp;
-    const elapsed = timestamp - start;
   
-    if (previousTimeStamp !== timestamp) {
-      // Math.min() is used here to make sure the element stops at exactly 200px
-      const count = Math.min(0.1 * elapsed, 200);
-      element.style.transform = 'translateX(' + count + 'px)';
-    }
-  
-    if (elapsed < 2000) { // Stop the animation after 2 seconds
-      previousTimeStamp = timestamp
-      window.requestAnimationFrame(this.step);
-    }
-  }
-  
-
   getAuthors(response) {
     let fullName = "";
     fullName = response.map( function(x, index){
@@ -155,23 +135,48 @@ class App extends Component{
     let  hasBtnNextClicked = this.state.hasBtnNextClicked;
 
     return (
+     
       <div className="App">
-
+         <Router>
         <Navbar/>
-        <Home
-               handleClickDetail={() => this.handleClickDetail()}
-               handleClick={() => this.handleClick()}
-               title={title} 
-               authors={authors} 
-               books={books} 
-               subject={subject} 
-               genre={genre}
-               background={background}
-               hasBtnMoreClicked={hasBtnMoreClicked}
-               hasBtnNextClicked={hasBtnNextClicked}
-          />
+        {/* <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/book-list">Bookshelf</Link>
+            </li>
+          </ul>
+        </nav> */}
+
+        <Switch>
+          <Route exact path="/">
+            <Home
+                    handleClickDetail={() => this.handleClickDetail()}
+                    handleClick={() => this.handleClick()}
+                    title={title} 
+                    authors={authors} 
+                    books={books} 
+                    subject={subject} 
+                    genre={genre}
+                    background={background}
+                    hasBtnMoreClicked={hasBtnMoreClicked}
+                    hasBtnNextClicked={hasBtnNextClicked}
+                />
+          </Route>
+
+          <Route exact path="/book-list">
+              <BookList/>
+          </Route>
             
+        </Switch>
+        </Router>
       </div>
+      
     );
   }
 }
