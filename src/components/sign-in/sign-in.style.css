@@ -1,0 +1,10 @@
+
+.sign-in{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    text-align: start;
+}
+ body{
+     background-color: bisque;
+ }

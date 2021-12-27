@@ -3,8 +3,9 @@ import { Component } from 'react/cjs/react.production.min';
 import './App.css';
 import {BookList} from './components/book-list/Booklist'; 
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Navbar from './components/navbar/NavbarComponent'
-import {Home} from './components/home/Home'
+import Navbar from './components/navbar/NavbarComponent';
+import {Home} from './components/home/Home';
+import Login from './components/login/Login';
 
 class App extends Component{
 
@@ -119,8 +120,6 @@ class App extends Component{
     return background;
   }
 
-
-  
   render(){
     // const title = this.state.books.title;
     const books = this.state.books;
@@ -168,6 +167,10 @@ class App extends Component{
                         hasBtnMoreClicked={hasBtnMoreClicked}
                         hasBtnNextClicked={hasBtnNextClicked}
               />
+          </Route>
+
+          <Route exact path="/login">
+                <Login/>
           </Route>
             
         </Switch>

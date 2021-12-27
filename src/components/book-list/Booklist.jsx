@@ -2,15 +2,18 @@ import React from 'react';
 import './book-list.styles.css';
 import {Book} from '../book/Book';
 import {Home} from '../home/Home';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faBook} from '@fortawesome/free-solid-svg-icons';
 
 
 class BookList extends React.Component{
     
     render() { 
      return( 
- 
       <div>
-            <h1>Bookshelf</h1>
+            <h1 className="header">
+                <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
+            </h1>
             
             <div className="card-list">
 
