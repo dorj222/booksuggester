@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Navbar from './components/navbar/NavbarComponent';
 import {Home} from './components/home/Home';
 import Login from './components/login/Login';
-import {auth} from './firebase/firebase.utils';
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 class App extends Component{
 
@@ -30,10 +30,26 @@ class App extends Component{
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({currentUser: user});
-      console.log(user);
-        })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+
+      if(userAuth){
+          const userRef = await createUserProfileDocument(userAuth);
+          userRef.onSnapshot(snapShot => {
+            this.setState({
+              currentUser: { 
+                id: snapShot.id, 
+              ...snapShot.data()
+                }
+              }
+              // , ()=>{
+              //    console.log(this.state);
+              // }
+              );
+          }); 
+      }else{
+        this.setState({currentUser: userAuth});
+      }
+      });
     this.callAPI();
   }
 

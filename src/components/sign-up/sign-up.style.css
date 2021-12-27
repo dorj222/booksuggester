@@ -1,0 +1,16 @@
+.signUp{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    text-align: start;
+}
+
+body{
+     background-color: bisque;
+ }
+
+#btnRegister{
+    margin-right: 10px !important;
+    border: none;
+    background-color: #1e2824;
+}
