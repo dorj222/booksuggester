@@ -2,3 +2,9 @@
     border-bottom: 1px solid black !important;
     background-color: bisque;
   }
+
+  .btnSignout{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }

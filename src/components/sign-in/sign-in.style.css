@@ -10,7 +10,8 @@ body{
      background-color: bisque;
  }
 
-
 #btnLogin{
     margin-right: 10px !important;
+    border: none;
+    background-color: #1e2824;
 }

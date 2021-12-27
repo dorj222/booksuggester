@@ -2,6 +2,7 @@ import React from 'react';
 import './sign-in.style.css';
 import { Form, FormGroup, FormControl, Button} from 'react-bootstrap';
 import {signInWithGoogle} from '../../firebase/firebase.utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class SignIn extends React.Component{
 
@@ -60,7 +61,7 @@ constructor(props) {
                 </Button>
 
                 <Button variant="primary" onClick={signInWithGoogle}>
-                    Continue with Google
+                 Continue with Google
                 </Button>
 
                 </Form>

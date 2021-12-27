@@ -1,14 +1,11 @@
 
 .login{
     display: flex;
-    height: 80vh;
+    height: 100vh;
     flex-direction: row;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
-    background-color: bisque;
-}
-
-body{
+    overflow: hidden;
     background-color: bisque;
 }

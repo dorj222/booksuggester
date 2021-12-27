@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Navbar from './components/navbar/NavbarComponent';
 import {Home} from './components/home/Home';
 import Login from './components/login/Login';
+import {auth} from './firebase/firebase.utils';
 
 class App extends Component{
 
@@ -21,12 +22,23 @@ class App extends Component{
       genre: '',
       background: '',
       hasBtnMoreClicked: false,
-      hasBtnNextClicked: false
+      hasBtnNextClicked: false,
+      currentUser: null
     };
   }
 
+  unsubscribeFromAuth = null;
+
   componentDidMount(){
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      this.setState({currentUser: user});
+      console.log(user);
+        })
     this.callAPI();
+  }
+
+  componentWillUnmount(){
+    this.unsubscribeFromAuth();
   }
 
   callAPI() {
@@ -137,7 +149,7 @@ class App extends Component{
      
       <div className="App">
         <Router>
-        <Navbar/>
+        <Navbar currentUser={this.state.currentUser}/>
         <Switch>
           <Route exact path="/">
             <Home
