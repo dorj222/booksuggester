@@ -1,6 +1,7 @@
 import React from 'react';
 import './sign-in.style.css';
 import { Form, FormGroup, FormControl, Button} from 'react-bootstrap';
+import {signInWithGoogle} from '../../firebase/firebase.utils';
 
 class SignIn extends React.Component{
 
@@ -54,10 +55,14 @@ constructor(props) {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    Login
+                <Button variant="primary" type="submit" id="btnLogin"> 
+                    Login 
                 </Button>
-                
+
+                <Button variant="primary" onClick={signInWithGoogle}>
+                    Continue with Google
+                </Button>
+
                 </Form>
                 
             </div>
