@@ -3,6 +3,9 @@ import './sign-in.style.css';
 import { Form, FormGroup, FormControl, Button} from 'react-bootstrap';
 import {auth, signInWithGoogle} from '../../firebase/firebase.utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { useHistory, withRouter, Redirect } from "react-router-dom";
+import { RouteComponentProps } from 'react-router';
 
 class SignIn extends React.Component{
 
@@ -17,12 +20,15 @@ constructor(props) {
     
     handleSubmit = async event => {
         event.preventDefault();
+        const history = this.props.history;
         const { email, password } = this.state;
         try {
           await auth.signInWithEmailAndPassword(email, password);
           this.setState({ email: '', password: '' });
+          history.push("/");
         } catch (error) {
           console.log(error);
+          alert("The email or password are incorrect.")
         }
       };
     
@@ -31,10 +37,18 @@ constructor(props) {
         this.setState({[name]: value});
     };
 
+    // handleSubmitGoogle = async event =>{
+    //     event.preventDefault();
+    //     const history = this.props.history;
+    //     await signInWithGoogle();
+    //     console.log("event: ", event.authResponse)
+    //         // history.push("/");
+    // };
+
     render(){
         return(
             <div className='sign-in'>
-                
+                <h3>Sign In</h3>
                 <Form onSubmit={this.handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -66,9 +80,9 @@ constructor(props) {
                     Login 
                 </Button>
 
-                <Button variant="primary" onClick={signInWithGoogle}>
+                {/* <Button variant="primary" onClick={this.handleSubmitGoogle}>
                  Continue with Google
-                </Button>
+                </Button> */}
 
                 </Form>
                 
@@ -77,4 +91,4 @@ constructor(props) {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

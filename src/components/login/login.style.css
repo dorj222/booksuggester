@@ -4,14 +4,17 @@
     height: 100vh;
     flex-direction: row;
     margin: 0 auto;
-    align-items: start;
-    justify-content: start;
+    width: 85vw;
+    align-items: flex-start;
+    justify-content: space-evenly !important;
     overflow: hidden;
+    flex-wrap: wrap;
     background-color: bisque;
     margin-top: 100px;
+    gap: 40px;
 }
 
 .signIn{
-    margin-right: 100px;
+    /* margin-right: 100px; */
 }
 

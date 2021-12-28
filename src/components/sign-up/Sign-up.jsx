@@ -4,7 +4,8 @@ import { Form, FormGroup, FormControl, Button, InputGroup} from 'react-bootstrap
 import {signInWithGoogle} from '../../firebase/firebase.utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {auth, createUserProfileDocument} from '../../firebase/firebase.utils'
-
+import { RouteComponentProps } from 'react-router';
+import { useHistory, withRouter, Redirect } from "react-router-dom";
 
 class SignUp extends React.Component{
     constructor(props) {
@@ -14,7 +15,7 @@ class SignUp extends React.Component{
             displayName: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
         }
     }
 
@@ -27,6 +28,7 @@ class SignUp extends React.Component{
             return;
         }
         try{
+            const history = this.props.history;
             const{ user } = await auth.createUserWithEmailAndPassword(email, password);
             await createUserProfileDocument(user, {displayName});
             this.setState ({
@@ -35,8 +37,13 @@ class SignUp extends React.Component{
                 password: '',
                 confirmPassword: ''
             });
+            history.push("/");
         } catch(error){
-            console.error(error);
+            console.error(error.message);
+            if(error.message.toString().includes("auth/email-already-in-use")){
+               alert("The email address is already in use by another account.");
+               
+            }
         }
     };
 
@@ -51,7 +58,8 @@ class SignUp extends React.Component{
 
         return(
             <div className="signUp">
-
+                
+                <h3>Sign Up</h3>
                 <Form onSubmit={this.handleSubmit}>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -87,6 +95,7 @@ class SignUp extends React.Component{
                              name="password" 
                              placeholder="Enter password" 
                              value={password} 
+                             minlength="6"
                              onChange={this.handleChange}
                              label="password"  
                              required  
@@ -100,15 +109,17 @@ class SignUp extends React.Component{
                              name="confirmPassword" 
                              placeholder="Confirm Password" 
                              value={confirmPassword} 
+                             minlength="6"
                              onChange={this.handleChange}
                              label="Confirm Password"  
                              required  
                     />
                 </Form.Group>
-
+                
                 <Button variant="primary" type="submit" id="btnRegister"> 
                     Register 
                 </Button>
+
 
                 </Form>
             </div>
@@ -116,4 +127,4 @@ class SignUp extends React.Component{
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);
