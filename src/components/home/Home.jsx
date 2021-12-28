@@ -21,13 +21,14 @@ class Home extends React.Component {
                     background={this.props.background}
                     hasBtnMoreClicked={this.props.hasBtnMoreClicked}
                     hasBtnNextClicked={this.props.hasBtnNextClicked}
+                    hasBtnSaveClicked={this.props.hasBtnSaveClicked}
                     />
 
                     <div className='btnContainer'>
                         <button id="btnAbout" onClick={() => this.props.handleClickDetail()} >
                             more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
                         </button>
-                        <button id="btnBookMark">
+                        <button id="btnBookMark" onClick={() => this.props.handleClickSave()}>
                             save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
                         </button>
                         <button id="btnNext" onClick={() => this.props.handleClick()}>

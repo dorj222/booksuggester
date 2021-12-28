@@ -95,7 +95,7 @@ class SignUp extends React.Component{
                              name="password" 
                              placeholder="Enter password" 
                              value={password} 
-                             minlength="6"
+                             minLength="6"
                              onChange={this.handleChange}
                              label="password"  
                              required  
@@ -109,7 +109,7 @@ class SignUp extends React.Component{
                              name="confirmPassword" 
                              placeholder="Confirm Password" 
                              value={confirmPassword} 
-                             minlength="6"
+                             minLength="6"
                              onChange={this.handleChange}
                              label="Confirm Password"  
                              required  

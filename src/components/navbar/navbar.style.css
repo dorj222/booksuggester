@@ -7,4 +7,9 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    color: #0000008C;
+  }
+
+  .btnSignout:hover{
+    color: black;
   }

@@ -6,8 +6,8 @@ import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import Navbar from './components/navbar/NavbarComponent';
 import {Home} from './components/home/Home';
 import Login from './components/login/Login';
-import {auth, createUserProfileDocument} from './firebase/firebase.utils';
-
+import {auth, createUserProfileDocument, firestore} from './firebase/firebase.utils';
+import { doc, setDoc, collection, getDocs, addDoc } from "firebase/firestore"; 
 class App extends Component{
 
   constructor(){
@@ -23,13 +23,38 @@ class App extends Component{
       background: '',
       hasBtnMoreClicked: false,
       hasBtnNextClicked: false,
+      hasBtnSaveClicked: false,
       currentUser: null
     };
   }
 
   unsubscribeFromAuth = null;
 
-  componentDidMount(){
+  handleClickSave(){
+    this.setState({
+      hasBtnSaveClicked: true
+    });
+
+    if(!this.state.currentUser){
+      alert("Please sign in!");
+      return
+    }else{
+
+     try{
+     const response = async()=> {  
+      firestore.collection("users").doc(this.state.currentUser.id).collection('books').add(
+      this.state.books
+      );
+      }
+      response();
+    }catch(error){
+      console.log(error);
+    }
+    }
+  }
+
+
+  async componentDidMount(){
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
       if(userAuth){
@@ -41,9 +66,9 @@ class App extends Component{
               ...snapShot.data()
                 }
               }
-              , ()=>{
-                 console.log(this.state);
-              }
+              // , ()=>{
+              //    console.log(this.state.currentUser);
+              // }
               );
           }); 
       }else{
@@ -61,7 +86,7 @@ class App extends Component{
     const randomNumber = Math.floor(Math.random() * 100);
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
 
-    fetch(URL)
+    const response = async() => {fetch(URL)
       .then(response => response.json())
       .then( 
         (response) => {this.setState({ 
@@ -78,6 +103,8 @@ class App extends Component{
           error
         });
       })
+    }
+    response();
   }
 
   getRepsonse(response) {
@@ -160,6 +187,7 @@ class App extends Component{
     const background = this.state.background;
     let  hasBtnMoreClicked = this.state.hasBtnMoreClicked;
     let  hasBtnNextClicked = this.state.hasBtnNextClicked;
+    let  hasBtnSaveCLicked = this.state.hasBtnSaveClicked;
 
     return (
      
@@ -171,6 +199,7 @@ class App extends Component{
             <Home
                     handleClickDetail={() => this.handleClickDetail()}
                     handleClick={() => this.handleClick()}
+                    handleClickSave={()=> this.handleClickSave()}
                     title={title} 
                     authors={authors} 
                     books={books} 
@@ -179,6 +208,7 @@ class App extends Component{
                     background={background}
                     hasBtnMoreClicked={hasBtnMoreClicked}
                     hasBtnNextClicked={hasBtnNextClicked}
+                    hasBtnSaveCLicked={hasBtnSaveCLicked}
                 />
           </Route>
 
@@ -194,6 +224,7 @@ class App extends Component{
                         background={background}
                         hasBtnMoreClicked={hasBtnMoreClicked}
                         hasBtnNextClicked={hasBtnNextClicked}
+                        hasBtnSaveCLicked={hasBtnSaveCLicked}
               />
           </Route>
 
