@@ -1,6 +1,6 @@
 
 .card-list {
-    width: 85vw;
+    width: 75vw;
     margin: 0 auto;
     justify-content: start;
     display: flex;
@@ -9,8 +9,33 @@
     gap: 40px;
     margin-bottom: 60px;
     margin-top: 60px;
+    min-height: 70vh;
+    background-color: bisque;
+    column-gap: 60px;
   }
 
   .header{
     margin-top: 60px;
+  }
+
+  button{
+    margin-right: 5px;
+    background-color: bisque; 
+    border: none;
+    border-radius: 10px;
+    color: black;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 10px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    transition: 0.2s ease-in-out;
+    background: bisque;
+    text-decoration: underline;
   }

@@ -14,7 +14,7 @@ class App extends Component{
     super();
 
     this.state ={
-      books: [],
+      book: [],
       searchField: '',
       authors: '',
       title: '',
@@ -29,30 +29,6 @@ class App extends Component{
   }
 
   unsubscribeFromAuth = null;
-
-  handleClickSave(){
-    this.setState({
-      hasBtnSaveClicked: true
-    });
-
-    if(!this.state.currentUser){
-      alert("Please sign in!");
-      return
-    }else{
-
-     try{
-     const response = async()=> {  
-      firestore.collection("users").doc(this.state.currentUser.id).collection('books').add(
-      this.state.books
-      );
-      }
-      response();
-    }catch(error){
-      console.log(error);
-    }
-    }
-  }
-
 
   async componentDidMount(){
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -90,7 +66,7 @@ class App extends Component{
       .then(response => response.json())
       .then( 
         (response) => {this.setState({ 
-        books: response.results[0],
+        book: response.results[0],
         title: response.results[0].title,
         authors: this.getAuthors(response.results[0].authors),
         subject: this.getRepsonse(response.results[0].subjects),
@@ -166,6 +142,33 @@ class App extends Component{
         )}
   }
 
+  handleClickSave(){
+    this.setState({
+      hasBtnSaveClicked: true
+    });
+
+    if(!this.state.currentUser){
+      alert("Please sign in!");
+      return
+    }else{
+
+     try{
+     const response = async()=> {  
+      firestore.collection("users").doc(this.state.currentUser.id).collection('books').add(
+        {
+      "title": this.state.title,
+      "authors": this.state.authors,
+      "subject": this.state.subject,
+      "genre": this.state.genre,
+      "background": this.state.background
+          }
+      );}
+      response();
+    }catch(error){
+      console.log(error);
+    } }
+  }
+
   generateBackground() {
     let background = this.state.background;
     const getRandomInt = Math.floor(Math.random() * 100) + 155;
@@ -176,11 +179,11 @@ class App extends Component{
   }
 
   render(){
-    // const title = this.state.books.title;
-    const books = this.state.books;
-    // console.log('books render: ', books.copyright + " " + books.languages);
+    // const title = this.state.book.title;
+    const book = this.state.book;
+    // console.log('book render: ', book.copyright + " " + book.languages);
     const authors = this.state.authors;
-    // console.log('books authors: ', authors);
+    // console.log('book authors: ', authors);
     const title = this.state.title;
     const subject = this.state.subject;
     const genre = this.state.genre;
@@ -188,6 +191,7 @@ class App extends Component{
     let  hasBtnMoreClicked = this.state.hasBtnMoreClicked;
     let  hasBtnNextClicked = this.state.hasBtnNextClicked;
     let  hasBtnSaveCLicked = this.state.hasBtnSaveClicked;
+    let currentUser = this.state.currentUser;
 
     return (
      
@@ -202,7 +206,7 @@ class App extends Component{
                     handleClickSave={()=> this.handleClickSave()}
                     title={title} 
                     authors={authors} 
-                    books={books} 
+                    book={book} 
                     subject={subject} 
                     genre={genre}
                     background={background}
@@ -216,15 +220,10 @@ class App extends Component{
               <BookList
                         handleClickDetail={() => this.handleClickDetail()}
                         handleClick={() => this.handleClick()}
-                        title={title} 
-                        authors={authors} 
-                        books={books} 
-                        subject={subject} 
-                        genre={genre}
-                        background={background}
                         hasBtnMoreClicked={hasBtnMoreClicked}
                         hasBtnNextClicked={hasBtnNextClicked}
                         hasBtnSaveCLicked={hasBtnSaveCLicked}
+                        currentUser={currentUser}
               />
           </Route>
 
