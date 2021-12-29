@@ -3,15 +3,15 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
 const config = {
-    apiKey: "AIzaSyBV1WRHW6Y_LuXbXtAz19UqmUF5z0Fe0Nw",
-    authDomain: "booksuggester-84faf.firebaseapp.com",
-    projectId: "booksuggester-84faf",
-    storageBucket: "booksuggester-84faf.appspot.com",
-    messagingSenderId: "776179650797",
-    appId: "1:776179650797:web:965e7c18af892bca7c3ce4",
-    measurementId: "G-E4Q375CQ24"
+    apiKey: "AIzaSyAWo9SvxOW4qvYf-iyFg8Tq1ZYNzhmJ5GM",
+    authDomain: "booksuggester-94bd1.firebaseapp.com",
+    projectId: "booksuggester-94bd1",
+    storageBucket: "booksuggester-94bd1.appspot.com",
+    messagingSenderId: "1083435225479",
+    appId: "1:1083435225479:web:2b08b2b9011a5be26cc322",
+    measurementId: "G-G9Q0SQZYFS"
   };
-
+  
   export const createUserProfileDocument = async(userAuth, additionalData) =>{
         if(!userAuth) return;
 

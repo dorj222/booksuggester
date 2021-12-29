@@ -37,13 +37,13 @@ constructor(props) {
         this.setState({[name]: value});
     };
 
-    // handleSubmitGoogle = async event =>{
-    //     event.preventDefault();
-    //     const history = this.props.history;
-    //     await signInWithGoogle();
-    //     console.log("event: ", event.authResponse)
-    //         // history.push("/");
-    // };
+    handleSubmitGoogle = async event =>{
+        // event.preventDefault();
+        // const history = this.props.history;
+        // await signInWithGoogle();
+        // console.log("event: ", event.authResponse)
+            // history.push("/");
+    };
 
     render(){
         return(

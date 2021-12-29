@@ -50,19 +50,24 @@ class BookList extends React.Component{
         response();
     }
 
-    handleClickDelete(book){
-            // alert("Yes it works");
-            // console.log(book);
-            // const response = async()=> {  
-            // deleteDoc(firestore.collection("users").doc(this.props.currentUser.id).collection('books'), );
-            // }
-            //   response();
+    handleClickDelete(bookID){
+        const response = async()=> {  
+            await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).delete()
+            .then(res => {
+                console.log(res);
+            })
+            .catch((error) =>{
+                console.error("Error deleting a document: ", error);
+            }) 
+            );
+        }
+        response();
+        this.componentDidMount()
     }
 
     render() { 
     
     let books = this.state.books;
-    
      return( 
         <div>
              <h1 className="header">
@@ -73,8 +78,9 @@ class BookList extends React.Component{
                 { books.map(
                     book =>(
                        
-                        <div>
-                            <Book className="book"
+                        <div key={book.id}>
+                            <Book   key={book.id}
+                                    className="book"
                                     title={book.title} 
                                     authors={book.authors} 
                                     books={book}
@@ -85,17 +91,15 @@ class BookList extends React.Component{
                             <button id="btnAbout" onClick={() => this.props.handleClickDetail()} >
                                 more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
                             </button>
-                            <button id="btnDelete"  onClick={this.handleClickDelete(book)}>
+                            <button id="btnDelete"  onClick={()=>this.handleClickDelete(book.id)}>
                                 delete <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                             </button>
                             <button id="btnRead"  >
                                 read <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
                             </button>
-
                         </div>
                     ))}
-            </div>
-           
+            </div>    
         </div>
      )
     }
