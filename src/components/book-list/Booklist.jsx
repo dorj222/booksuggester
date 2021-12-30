@@ -2,12 +2,13 @@ import React from 'react';
 import './book-list.styles.css';
 import {Book} from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTrash, faInfoCircle,faBook} from '@fortawesome/free-solid-svg-icons';
+import {faTrash, faInfoCircle, faBook,faBookmark} from '@fortawesome/free-solid-svg-icons';
 import { firestore} from "../../firebase/firebase.utils";
 import { doc, setDoc, deleteDoc, getDocs, addDoc } from "firebase/firestore"; 
 import { Button } from 'react-bootstrap';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 import { type } from '@testing-library/user-event/dist/type';
+
 
 class BookList extends React.Component{
     constructor(){
@@ -42,7 +43,7 @@ class BookList extends React.Component{
                         dataBooks[key] = tempObject;
                     }
                 } }
-            //   console.log(dataBooks);
+              console.log(dataBooks);
             this.setState({
                 books: dataBooks
             })
@@ -53,6 +54,23 @@ class BookList extends React.Component{
     handleClickDelete(bookID){
         const response = async()=> {  
             await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).delete()
+            .then(res => {
+                console.log(res);
+            })
+            .catch((error) =>{
+                console.error("Error deleting a document: ", error);
+            }) 
+            );
+        }
+        response();
+        this.componentDidMount()
+    }
+
+    handleClickUpdate(bookID, hasRead){
+        const response = async()=> {  
+            await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).update({
+                "hasRead": !hasRead
+            })
             .then(res => {
                 console.log(res);
             })
@@ -89,14 +107,15 @@ class BookList extends React.Component{
                                     background={book.background}
                                 />
                             <button id="btnAbout" onClick={() => this.props.handleClickDetail()} >
-                                more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
+                             <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon> more
                             </button>
                             <button id="btnDelete"  onClick={()=>this.handleClickDelete(book.id)}>
-                                delete <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
+                             <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> delete
                             </button>
-                            <button id="btnRead"  >
-                                read <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
-                            </button>
+                   
+                            <label> 
+                            <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>  <span class="checkmark">read </span> <input type="checkbox" checked={book.hasRead} onClick={() => this.handleClickUpdate(book.id, book.hasRead)} /> 
+                            </label>
                         </div>
                     ))}
             </div>    
@@ -104,5 +123,4 @@ class BookList extends React.Component{
      )
     }
 }
-
 export {BookList};

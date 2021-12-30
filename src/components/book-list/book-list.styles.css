@@ -18,19 +18,17 @@
     margin-top: 60px;
   }
 
-  button{
-    margin-right: 5px;
+  button, .checkmark{
+    /* margin: 10px 15px; */
     background-color: bisque; 
     border: none;
     border-radius: 10px;
     color: black;
-    padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     font-weight: 600;
     display: inline-block;
-    font-size: 14px;
-    margin: 4px 10px;
+    font-size: 17px;
     cursor: pointer;
   }
   
@@ -38,4 +36,24 @@
     transition: 0.2s ease-in-out;
     background: bisque;
     text-decoration: underline;
+  }
+
+ .checkmark:hover {
+    transition: 0.2s ease-in-out;
+    background: bisque;
+    text-decoration: underline;
+  }
+
+
+label{
+    margin-left: 8px;
+    background-color: bisque; 
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 17px;
+    cursor: pointer;
   }

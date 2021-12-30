@@ -24,6 +24,7 @@ class App extends Component{
       hasBtnMoreClicked: false,
       hasBtnNextClicked: false,
       hasBtnSaveClicked: false,
+      hasRead: false,
       currentUser: null
     };
   }
@@ -160,13 +161,15 @@ class App extends Component{
       "authors": this.state.authors,
       "subject": this.state.subject,
       "genre": this.state.genre,
-      "background": this.state.background
+      "background": this.state.background,
+      "hasRead": this.state.hasRead
           }
       );}
       response();
     }catch(error){
       console.log(error);
     } }
+    this.handleClick()
   }
 
   generateBackground() {
