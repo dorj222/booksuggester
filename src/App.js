@@ -8,6 +8,7 @@ import {Home} from './components/home/Home';
 import Login from './components/login/Login';
 import {auth, createUserProfileDocument, firestore} from './firebase/firebase.utils';
 import { doc, setDoc, collection, getDocs, addDoc } from "firebase/firestore"; 
+
 class App extends Component{
 
   constructor(){
@@ -15,16 +16,11 @@ class App extends Component{
 
     this.state ={
       book: [],
-      searchField: '',
       authors: '',
       title: '',
       subject: '',
       genre: '',
       background: '',
-      hasBtnMoreClicked: false,
-      hasBtnNextClicked: false,
-      hasBtnSaveClicked: false,
-      hasRead: false,
       currentUser: null
     };
   }
@@ -68,7 +64,7 @@ class App extends Component{
       .then( 
         (response) => {this.setState({ 
         book: response.results[0],
-        title: response.results[0].title,
+        title: this.getTitleName(response.results[0].title),
         authors: this.getAuthors(response.results[0].authors),
         subject: this.getRepsonse(response.results[0].subjects),
         genre: this.getRepsonse(response.results[0].bookshelves),
@@ -82,6 +78,15 @@ class App extends Component{
       })
     }
     response();
+  }
+
+  getTitleName(response) {
+    if(response){
+      return response;
+    }
+    else{
+      return "";
+    }
   }
 
   getRepsonse(response) {
@@ -119,60 +124,6 @@ class App extends Component{
     return fullName;
   }
 
-  handleClick() {
-    this.callAPI();
-    this.setState({
-        hasBtnMoreClicked: false,
-        hasBtnNextClicked: true
-      })
-  }
-
-  handleClickDetail(){
-
-    if(!this.state.hasBtnMoreClicked){
-    this.setState({
-      hasBtnMoreClicked: true,
-      hasBtnNextClicked: false,
-        }
-      )}  
-    else{
-      this.setState({
-        hasBtnMoreClicked: false,
-        hasBtnNextClicked: false,
-          }
-        )}
-  }
-
-  handleClickSave(){
-    this.setState({
-      hasBtnSaveClicked: true
-    });
-
-    if(!this.state.currentUser){
-      alert("Please sign in!");
-      return
-    }else{
-
-     try{
-     const response = async()=> {  
-      firestore.collection("users").doc(this.state.currentUser.id).collection('books').add(
-        {
-      "title": this.state.title,
-      "authors": this.state.authors,
-      "subject": this.state.subject,
-      "genre": this.state.genre,
-      "background": this.state.background,
-      "hasRead": this.state.hasRead,
-      "hasMoreClicked": false
-          }
-      );}
-      response();
-    }catch(error){
-      console.log(error);
-    } }
-    this.handleClick()
-  }
-
   generateBackground() {
     let background = this.state.background;
     const getRandomInt = Math.floor(Math.random() * 100) + 155;
@@ -186,40 +137,35 @@ class App extends Component{
     return (
      
       <div className="App">
-        <Router>
-        <Navbar currentUser={this.state.currentUser}/>
-        <Switch>
-          <Route exact path="/">
-            <Home
-                    handleClickDetail={() => this.handleClickDetail()}
-                    handleClick={() => this.handleClick()}
-                    handleClickSave={()=> this.handleClickSave()}
-                    title={this.state.title} 
-                    authors={this.state.authors} 
-                    book={this.state.book} 
-                    subject={this.state.subject} 
-                    genre={this.state.genre}
-                    background={this.state.background}
-                    hasBtnMoreClicked={this.state.hasBtnMoreClicked}
-                    hasBtnNextClicked={this.state.hasBtnNextClicked}
-                    hasBtnSaveCLicked={this.state.hasBtnSaveClicked}
-                />
-          </Route>
+          <Router>
+                  <Navbar currentUser={this.state.currentUser}/>
+                  <Switch>
+                          <Route exact path="/">
 
-          <Route exact path="/book-list">
-              <BookList
-                        currentUser={this.state.currentUser}
-              />
-          </Route>
+                            <Home
+                                    currentUser={this.state.currentUser}
+                                    callAPI={() => this.callAPI()}
+                                    title={this.state.title} 
+                                    authors={this.state.authors} 
+                                    subject={this.state.subject} 
+                                    genre={this.state.genre}
+                                    background={this.state.background}
+                                />
+                          </Route>
 
-          <Route exact path="/login">
-                <Login/>
-          </Route>
-            
-        </Switch>
-        </Router>
+                          <Route exact path="/book-list">
+                              <BookList
+                                    currentUser={this.state.currentUser}
+                              />
+                          </Route>
+
+                          <Route exact path="/login">
+                                <Login/>
+                          </Route>
+
+                  </Switch>
+          </Router>
       </div>
-      
     );
   }
 }

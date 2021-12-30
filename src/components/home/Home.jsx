@@ -2,9 +2,70 @@ import React from 'react';
 import {Book} from '../book/Book'
 import './home.style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward, faHeart, faBookmark, faInfoCircle, faBookOpen} from '@fortawesome/free-solid-svg-icons';
+import { faForward, faHeart, faInfoCircle} from '@fortawesome/free-solid-svg-icons';
+import {auth, createUserProfileDocument, firestore} from "../../firebase/firebase.utils"
+import { doc, setDoc, collection, getDocs, addDoc } from "firebase/firestore"; 
 
 class Home extends React.Component {
+
+    constructor(){
+        super();
+    
+        this.state ={
+          hasBtnMoreClicked: false
+        };
+      }
+
+      handleClickNext() {
+        this.props.callAPI();
+        this.setState({
+            hasBtnMoreClicked: false
+          })
+      }
+    
+      handleClickDetail(){
+    
+        if(!this.state.hasBtnMoreClicked){
+        this.setState({
+          hasBtnMoreClicked: true
+            }
+          )}  
+        else{
+          this.setState({
+            hasBtnMoreClicked: false
+              }
+            )}
+      }
+    
+       handleClickSave(){
+
+        if(!this.props.currentUser){
+          alert("Please sign in!");
+          return
+        }
+        else{
+    
+         try{
+         const response = async()=> {  
+          firestore.collection("users").doc(this.props.currentUser.id).collection('books').add(
+            {
+          "title": this.props.title,
+          "authors": this.props.authors,
+          "subject": this.props.subject,
+          "genre": this.props.genre,
+          "background": this.props.background,
+          "hasRead": false,
+          "hasMoreClicked": false
+              }
+          );}
+          response();
+          this.handleClickNext()
+        }catch(error){
+          console.log(error);
+        } 
+      }
+    }
+    
 
     render() {
 
@@ -15,23 +76,22 @@ class Home extends React.Component {
                     <Book
                     title={this.props.title} 
                     authors={this.props.authors} 
-                    books={this.props.books} 
                     subject={this.props.subject} 
                     genre={this.props.genre}
                     background={this.props.background}
-                    hasBtnMoreClicked={this.props.hasBtnMoreClicked}
-                    hasBtnNextClicked={this.props.hasBtnNextClicked}
-                    hasBtnSaveClicked={this.props.hasBtnSaveClicked}
+                    hasBtnMoreClicked={this.state.hasBtnMoreClicked}
                     />
 
                     <div className='btnContainer'>
-                        <button id="btnAbout" onClick={() => this.props.handleClickDetail()} >
+                        <button id="btnAbout" onClick={() => this.handleClickDetail()} >
                             more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
                         </button>
-                        <button id="btnBookMark" onClick={() => this.props.handleClickSave()}>
+                        <button id="btnBookMark" onClick={() => this.handleClickSave()}>
                             save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
                         </button>
-                        <button id="btnNext" onClick={() => this.props.handleClick()}>
+                        <button id="btnNext" onClick={() => 
+                            this.handleClickNext()
+                            }>
                             next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
                         </button>
                     </div>

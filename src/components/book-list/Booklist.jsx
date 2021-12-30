@@ -4,10 +4,8 @@ import {Book} from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTrash, faInfoCircle, faBook,faBookmark} from '@fortawesome/free-solid-svg-icons';
 import { firestore} from "../../firebase/firebase.utils";
-import { doc, setDoc, deleteDoc, getDocs, addDoc } from "firebase/firestore"; 
-import { Button } from 'react-bootstrap';
-import { keyboard } from '@testing-library/user-event/dist/keyboard';
-import { type } from '@testing-library/user-event/dist/type';
+import { getDocs} from "firebase/firestore"; 
+
 
 
 class BookList extends React.Component{
@@ -104,11 +102,10 @@ class BookList extends React.Component{
     render() { 
     
     let books = this.state.books;
-    // let hasBtnMoreClicked = this.state.hasBtnMoreClicked;
      return( 
         <div>
              <h1 className="header">
-                    <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
+                <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
             </h1> 
 
             <div className='card-list'>   
@@ -120,7 +117,6 @@ class BookList extends React.Component{
                                     className="book"
                                     title={book.title} 
                                     authors={book.authors} 
-                                    books={book}
                                     subject={book.subject} 
                                     genre={book.genre}
                                     background={book.background}
