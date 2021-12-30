@@ -43,7 +43,7 @@ class BookList extends React.Component{
                         dataBooks[key] = tempObject;
                     }
                 } }
-              console.log(dataBooks);
+            //   console.log(dataBooks);
             this.setState({
                 books: dataBooks
             })
@@ -66,7 +66,7 @@ class BookList extends React.Component{
         this.componentDidMount()
     }
 
-    handleClickUpdate(bookID, hasRead){
+    handleClickUpdateRead(bookID, hasRead){
         const response = async()=> {  
             await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).update({
                 "hasRead": !hasRead
@@ -83,9 +83,28 @@ class BookList extends React.Component{
         this.componentDidMount()
     }
 
+    handleClickUpdateMore(bookID, hasMoreClicked){
+        const response = async()=> {  
+            await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).update({
+                "hasMoreClicked": !hasMoreClicked
+            })
+            .then(res => {
+                console.log(res);
+            })
+            .catch((error) =>{
+                console.error("Error deleting a document: ", error);
+            }) 
+            );
+        }
+        response();
+        this.componentDidMount()
+    }
+
+
     render() { 
     
     let books = this.state.books;
+    // let hasBtnMoreClicked = this.state.hasBtnMoreClicked;
      return( 
         <div>
              <h1 className="header">
@@ -105,8 +124,9 @@ class BookList extends React.Component{
                                     subject={book.subject} 
                                     genre={book.genre}
                                     background={book.background}
+                                    hasBtnMoreClicked={book.hasMoreClicked}
                                 />
-                            <button id="btnAbout" onClick={() => this.props.handleClickDetail()} >
+                            <button id="btnAbout" onClick={() => this.handleClickUpdateMore(book.id, book.hasMoreClicked)} >
                              <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon> more
                             </button>
                             <button id="btnDelete"  onClick={()=>this.handleClickDelete(book.id)}>
@@ -114,7 +134,7 @@ class BookList extends React.Component{
                             </button>
                    
                             <label> 
-                            <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>  <span class="checkmark">read </span> <input type="checkbox" checked={book.hasRead} onClick={() => this.handleClickUpdate(book.id, book.hasRead)} /> 
+                            <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>  <span class="checkmark">read </span> <input type="checkbox" checked={book.hasRead} onChange={() => this.handleClickUpdateRead(book.id, book.hasRead)} /> 
                             </label>
                         </div>
                     ))}

@@ -11,10 +11,8 @@ class Book extends React.Component {
       if(this.props.hasBtnMoreClicked){
         divStyleDetail = { display : "flex", flexDirection: "column"}
         divStyleCover = { display: "none"} 
-      } 
-
-      if(this.props.hasBtnNextClicked){
-        divStyleDetail = { display : "none"}
+      } else{
+      divStyleDetail = { display : "none"}
         divStyleCover = { display: "block"} 
       } 
 

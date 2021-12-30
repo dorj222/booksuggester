@@ -162,7 +162,8 @@ class App extends Component{
       "subject": this.state.subject,
       "genre": this.state.genre,
       "background": this.state.background,
-      "hasRead": this.state.hasRead
+      "hasRead": this.state.hasRead,
+      "hasMoreClicked": false
           }
       );}
       response();
@@ -182,20 +183,6 @@ class App extends Component{
   }
 
   render(){
-    // const title = this.state.book.title;
-    const book = this.state.book;
-    // console.log('book render: ', book.copyright + " " + book.languages);
-    const authors = this.state.authors;
-    // console.log('book authors: ', authors);
-    const title = this.state.title;
-    const subject = this.state.subject;
-    const genre = this.state.genre;
-    const background = this.state.background;
-    let  hasBtnMoreClicked = this.state.hasBtnMoreClicked;
-    let  hasBtnNextClicked = this.state.hasBtnNextClicked;
-    let  hasBtnSaveCLicked = this.state.hasBtnSaveClicked;
-    let currentUser = this.state.currentUser;
-
     return (
      
       <div className="App">
@@ -207,26 +194,21 @@ class App extends Component{
                     handleClickDetail={() => this.handleClickDetail()}
                     handleClick={() => this.handleClick()}
                     handleClickSave={()=> this.handleClickSave()}
-                    title={title} 
-                    authors={authors} 
-                    book={book} 
-                    subject={subject} 
-                    genre={genre}
-                    background={background}
-                    hasBtnMoreClicked={hasBtnMoreClicked}
-                    hasBtnNextClicked={hasBtnNextClicked}
-                    hasBtnSaveCLicked={hasBtnSaveCLicked}
+                    title={this.state.title} 
+                    authors={this.state.authors} 
+                    book={this.state.book} 
+                    subject={this.state.subject} 
+                    genre={this.state.genre}
+                    background={this.state.background}
+                    hasBtnMoreClicked={this.state.hasBtnMoreClicked}
+                    hasBtnNextClicked={this.state.hasBtnNextClicked}
+                    hasBtnSaveCLicked={this.state.hasBtnSaveClicked}
                 />
           </Route>
 
           <Route exact path="/book-list">
               <BookList
-                        handleClickDetail={() => this.handleClickDetail()}
-                        handleClick={() => this.handleClick()}
-                        hasBtnMoreClicked={hasBtnMoreClicked}
-                        hasBtnNextClicked={hasBtnNextClicked}
-                        hasBtnSaveCLicked={hasBtnSaveCLicked}
-                        currentUser={currentUser}
+                        currentUser={this.state.currentUser}
               />
           </Route>
 
