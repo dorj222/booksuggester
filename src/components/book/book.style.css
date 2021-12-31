@@ -39,4 +39,20 @@
     align-items: flex-start; 
   }
 
+  @media only screen and (max-width: 600px) {
+    .card-container{
+      width: 220px;
+      min-height: 330px;
+      padding: 10px;
+    }
+    h1 {
+      font-size: 25px !important;
+    }
+    h4{
+      font-size: 18px !important;
+    }
+    h6{
+      font-size: 14px !important;
+    }
 
+  }

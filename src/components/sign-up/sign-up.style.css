@@ -14,3 +14,9 @@ body{
     border: none;
     background-color: #1e2824;
 }
+
+@media only screen and (max-width: 900px){
+    #btnRegister{
+        margin-bottom: 60px;
+    }
+}

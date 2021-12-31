@@ -18,7 +18,7 @@
     margin-top: 60px;
   }
 
-  button, .checkmark{
+  button, #btnAbout, #btnDelete, .checkmark{
     /* margin: 10px 15px; */
     background-color: bisque; 
     border: none;
@@ -62,4 +62,34 @@ label{
     filter: invert(0%) hue-rotate(0deg) brightness(-0.1);
     transform: scale(1.2);
     accent-color: rgb(0, 0, 0);
+  }
+
+  @media only screen and (max-width: 900px) {
+    .card-list {
+      justify-content: center;
+      margin-top: 40px;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+
+    .header{
+      margin-top: 40px;
+    }
+    .card-list {
+      justify-content: center;
+    }
+
+    button, #btnAbout, #btnDelete, .checkmark{
+      font-size: 12px !important; 
+      border-radius: 0px;
+      text-align: start;
+    }
+
+    #btnAbout, #btnDelete{
+      margin-left: -12px;
+    }
+    label{
+      margin-left: 0px;
+    }
   }

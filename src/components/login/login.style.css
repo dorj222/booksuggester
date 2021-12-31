@@ -18,3 +18,9 @@
     /* margin-right: 100px; */
 }
 
+@media only screen and (max-width: 600px) {
+    .login{
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+}

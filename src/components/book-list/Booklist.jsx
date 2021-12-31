@@ -102,6 +102,8 @@ class BookList extends React.Component{
     render() { 
     
     let books = this.state.books;
+
+    if(this.props.currentUser){
      return( 
         <div>
              <h1 className="header">
@@ -137,6 +139,16 @@ class BookList extends React.Component{
             </div>    
         </div>
      )
+    }else{
+        return( 
+            <div>
+                 <h1 className="header">
+                    <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
+                </h1> 
+                <div className='card-list'>  
+                </div>
+            </div>
+            )}
     }
 }
 export {BookList};

@@ -38,11 +38,7 @@ class App extends Component{
                 id: snapShot.id, 
               ...snapShot.data()
                 }
-              }
-              // , ()=>{
-              //    console.log(this.state.currentUser);
-              // }
-              );
+              });
           }); 
       }else{
         this.setState({currentUser: userAuth});
@@ -162,7 +158,6 @@ class App extends Component{
                           <Route exact path="/login">
                                 <Login/>
                           </Route>
-
                   </Switch>
           </Router>
       </div>
