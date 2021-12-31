@@ -12,4 +12,14 @@
 
 body{
   background-color: bisque;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .homeContainer{
+    margin-top: -40px;
+  }
+  .App{
+    height: 100vh;
+  }
 }

@@ -138,7 +138,7 @@ class App extends Component{
                   <Switch>
                           <Route exact path="/">
 
-                            <Home
+                            <Home className="homeContainer"
                                     currentUser={this.state.currentUser}
                                     callAPI={() => this.callAPI()}
                                     title={this.state.title} 
