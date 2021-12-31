@@ -13,9 +13,9 @@ You may visit my application at the following link:
 
 Link: https://booksuggesterapp.herokuapp.com/
 
-## Cloning and Running the Application in local
+## Cloning and Running the Application in localhost
 
-Clone the project into local
+Clone the project to your local machine
 
 To install all the npm packages, please go into the project folder and type the following command
 ```
