@@ -4,9 +4,8 @@ import {Book} from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTrash, faInfoCircle, faBookmark} from '@fortawesome/free-solid-svg-icons';
 import { firestore} from "../../firebase/firebase.utils";
-import { getDocs} from "firebase/firestore"; 
-
-
+import EmptyIcon from "../../assets/svg/Empty"; 
+import styled from "styled-components";
 
 class BookList extends React.Component{
     constructor(){
@@ -16,37 +15,14 @@ class BookList extends React.Component{
         }
     };
 
-    async componentDidMount(){
-        const response = async()=> {  
-            const data = await getDocs(firestore.collection("users").doc(this.props.currentUser.id).collection('books'));
-            const dataBooks = data.docs.map((doc) => ({...doc.data()}));
-            let dataKeys = data.docs.map((doc) => ({...doc.id}));
-            let tempArray = [];
-            
-            dataKeys.map( function(x){
-                let temp = "";
-                for (const [key, value] of Object.entries(x)) {
-                    temp = temp + `${value}`;
-                  }
-                tempArray.push(temp)     
-                return temp;
-            });
-
-            for (const [key, value] of Object.entries(dataBooks)) {
-                for(let key2 = 0; key2 < tempArray.length; key2++){
-                    if(key2 === parseInt(key)){
-                        let tempObject = {};
-                        tempObject["id"] = tempArray[key2];
-                        tempObject = {...value, ...tempObject}; 
-                        dataBooks[key] = tempObject;
-                    }
-                } }
-            //   console.log(dataBooks);
-            this.setState({
-                books: dataBooks
-            })
+    async componentDidMount() {
+        try {
+            const snapshot = await firestore.collection("users").doc(this.props.currentUser.id).collection('books').get();
+            const dataBooks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            this.setState({ books: dataBooks });
+        } catch (error) {
+            console.error("Error fetching books:", error);
         }
-        response();
     }
 
     handleClickDelete(bookID){
@@ -98,49 +74,62 @@ class BookList extends React.Component{
         this.componentDidMount()
     }
 
-
     render() { 
-    
-    let books = this.state.books;
-    if(this.props.currentUser){
-     return( 
-        <div>
-            <div className='card-list'>   
-                { books.map(
-                    book =>(
-                       
+        const { books } = this.state;
+        return (
+            <WrapperCardList>
+                {this.props.currentUser && books.length > 0 ? (
+                    books.map(book => (
                         <div key={book.id}>
-                            <Book   key={book.id}
-                                    className="book"
-                                    title={book.title} 
-                                    authors={book.authors} 
-                                    subject={book.subject} 
-                                    genre={book.genre}
-                                    background={book.background}
-                                    hasBtnMoreClicked={book.hasMoreClicked}
-                                />
-                            <button id="btnAbout" onClick={() => this.handleClickUpdateMore(book.id, book.hasMoreClicked)} >
-                             <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon> more
+                            <Book
+                                key={book.id}
+                                className="book"
+                                title={book.title} 
+                                authors={book.authors} 
+                                subject={book.subject} 
+                                genre={book.genre}
+                                background={book.background}
+                                hasBtnMoreClicked={book.hasMoreClicked}
+                            />
+                            <button id="btnAbout" onClick={() => this.handleClickUpdateMore(book.id, book.hasMoreClicked)}>
+                                <FontAwesomeIcon icon={faInfoCircle}/> more
                             </button>
-                            <button id="btnDelete"  onClick={()=>this.handleClickDelete(book.id)}>
-                             <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon> delete
+                            <button id="btnDelete" onClick={() => this.handleClickDelete(book.id)}>
+                                <FontAwesomeIcon icon={faTrash}/> delete
                             </button>
-                   
-                            <label> 
-                            <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon>  <span class="checkmark">read </span> <input type="checkbox" checked={book.hasRead} onChange={() => this.handleClickUpdateRead(book.id, book.hasRead)} /> 
+                            <label>
+                                <FontAwesomeIcon icon={faBookmark}/>  <span className="checkmark">read </span> <input type="checkbox" checked={book.hasRead} onChange={() => this.handleClickUpdateRead(book.id, book.hasRead)} /> 
                             </label>
                         </div>
-                    ))}
-            </div>    
-        </div>
-     )
-    }else{
-        return( 
-            <div>
-                <div className='card-list'>  
-                </div>
-            </div>
-            )}
+                    ))
+                ) : (
+                    <WrapperMessage>
+                        <div className='flexColumn flexCenter'>
+                            <EmptyIcon/>
+                            <span className='font20'>No books found</span>
+                        </div>
+                    </WrapperMessage>
+                )}
+            </WrapperCardList>
+        );
     }
 }
 export {BookList};
+
+
+const WrapperCardList = styled.nav`
+    width: 75vw;
+    margin: 100px auto 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 70vh;
+`;
+
+const WrapperMessage  = styled.nav`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+`;

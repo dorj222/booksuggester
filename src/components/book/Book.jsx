@@ -21,9 +21,9 @@ class Book extends React.Component {
             className="card-container"
             style={{backgroundColor: this.props.background}}>
             
-             <h4 
+             <h6 
              style={divStyleCover}
-             className='hasBtnMoreClicked'> {this.props.title} </h4>
+             className='hasBtnMoreClicked'> {this.props.title} </h6>
 
             <div 
             style={divStyleDetail}
@@ -36,9 +36,7 @@ class Book extends React.Component {
                 <span className="detail">{"Copyright status in the US: " + "Public domain"}</span>
             </div>
 
-             <h6
-             style={divStyleCover}
-             >{this.props.authors}</h6>
+             <span style={divStyleCover} className="font12">{this.props.authors}</span>
         </div>
       );
 

@@ -144,7 +144,15 @@ body {
   display: flex;
   justify-content: space-between;
 }
-
+.flexCenteredElement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.marginTop120{
+  margin-top: 120px;
+}
 /* FONT SIZES */
 .font11 {
   font-size: 0.688rem;

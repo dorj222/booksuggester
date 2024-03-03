@@ -11,8 +11,8 @@
     -moz-osx-font-smoothing: grayscale;
     backface-visibility: hidden;
     transform: translateZ(0);
-    width: 300px;
-    min-height: 480px;
+    width: 260px;
+    min-height: 380px;
     margin: 0 auto;
     align-items: center;
     justify-content: space-around;
@@ -45,14 +45,7 @@
       min-height: 330px;
       padding: 10px;
     }
-    h1 {
-      font-size: 25px !important;
-    }
-    h4{
-      font-size: 18px !important;
-    }
     h6{
-      font-size: 14px !important;
+      font-size: 15px !important;
     }
-
   }
