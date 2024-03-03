@@ -1,7 +1,13 @@
 # BookSuggester
 ## Description
 
-This is a react app that suggests you a random book from [Project Gutenberg](https://www.gutenberg.org/), which is a an online library of free eBooks. A user can create their own bookshelf with this app by saving suggested books. Moreover, a user can see detailed information of a suggested book, such as a genre. On the bookshelf page, saved books can be seen; saved books can be ticked as read or can be deleted.         
+BookSuggester is a React app designed to provide users with random book recommendations sourced from [Project Gutenberg](https://www.gutenberg.org/), a vast online library of free eBooks. Users can explore a wide range of literary works and discover new titles across various genres and subjects, with a focus on older works for which U.S. copyright has expired.
+
+With BookSuggester, users can personalize their reading experience by creating their own bookshelf. They have the ability to save suggested books to their bookshelf, allowing for easy access to their favorite titles. Additionally, users can view detailed information about each suggested book, including its genre, subject, and language, helping them make informed decisions about their reading choices.
+
+The bookshelf feature in BookSuggester empowers users to manage their reading list effectively. On the bookshelf page, users can see all the books they have saved. They have the flexibility to mark books as read with a simple checkbox or remove them from their bookshelf altogether. This enables users to track their reading progress and organize their collection according to their preferences.
+
+BookSuggester offers a seamless and user-friendly interface for book enthusiasts to discover, save, and manage their reading materials effortlessly. Whether users are looking for literary classics or contemporary gems, BookSuggester provides a convenient platform for exploring the world of literature.
 
 ## Built with
 
@@ -11,7 +17,7 @@ React JS, Javascript, Firebase Database, Bootstrap 5, Font Awesome, and [Gutende
 
 You may visit my application at the following link:
 
-Link: https://booksuggesterapp.herokuapp.com/
+Link: https://dorj222.github.io/booksuggester/
 
 ## Cloning and Running the Application in localhost
 
