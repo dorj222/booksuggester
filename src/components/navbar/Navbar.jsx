@@ -5,8 +5,10 @@ import Sidebar from "./Sidebar";
 import Backdrop from "../elements/Backdrop";
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
+import { auth } from '../../firebase/firebase.utils';
 
-export default function TopNavbar() {
+export default function TopNavbar(props) { // Change here
+  const { currentUser } = props; // Change here
   const [y, setY] = useState(window.scrollY);
   const [sidebarOpen, toggleSidebar] = useState(false);
 
@@ -19,7 +21,7 @@ export default function TopNavbar() {
 
   return (
     <>
-      <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} currentUser={currentUser} />
       {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper style={{ height: y > 100 ? "60px" : "80px" }}>
         <NavInner>
@@ -37,9 +39,15 @@ export default function TopNavbar() {
             <li>
               <StyledNavLink to="/book-list" activeClassName="active">Bookshelf</StyledNavLink>
             </li>
-            <li>
-              <StyledNavLink to="/login" activeClassName="active">Login</StyledNavLink>
-            </li>
+            {currentUser ? (
+              <li>
+                <StyledNavLink to="/login" activeClassName="active" onClick={() => auth.signOut()}>Logout</StyledNavLink>
+              </li>
+            ) : (
+              <li>
+                <StyledNavLink to="/login" activeClassName="active">Login</StyledNavLink>
+              </li>
+            )}
           </NavLinks>
         </NavInner>
       </Wrapper>

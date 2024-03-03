@@ -12,7 +12,6 @@ class App extends Component{
 
   constructor(){
     super();
-
     this.state ={
       book: [],
       authors: '',
@@ -51,7 +50,7 @@ class App extends Component{
   }
 
   callAPI() {
-    const randomNumber = Math.floor(Math.random() * 100);
+    const randomNumber = Math.floor(Math.random() * 1000);
     let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
 
     const response = async() => {fetch(URL)

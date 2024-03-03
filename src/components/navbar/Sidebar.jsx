@@ -1,16 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink, Link } from "react-router-dom";
-// Assets
+import { Link } from "react-router-dom";
 import CloseIcon from "../../assets/svg/CloseIcon";
 import LogoIcon from "../../assets/svg/Logo";
+import { auth } from '../../firebase/firebase.utils';
 
-export default function Sidebar({ sidebarOpen, toggleSidebar }) {
+export default function Sidebar({ sidebarOpen, toggleSidebar, currentUser }) {
+  const handleLogout = () => {
+    auth.signOut();
+    toggleSidebar(false); // Close the sidebar after logout
+  };
+
   return (
     <Wrapper className="animate darkBg" sidebarOpen={sidebarOpen}>
       <SidebarHeader className="flexSpaceCenter">
         <div className="flexNullCenter">
-          < LogoIcon />
+          <LogoIcon />
           <h1 className="whiteColor font20" style={{ marginLeft: "15px" }}>
             BookSuggester
           </h1>
@@ -28,9 +33,6 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="/"
-            spy={true}
-            smooth={true}
-            offset={-60}
           >
             Home
           </Link>
@@ -42,32 +44,35 @@ export default function Sidebar({ sidebarOpen, toggleSidebar }) {
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="/book-list"
-            spy={true}
-            smooth={true}
-            offset={-60}
           >
             Bookshelf
           </Link>
         </li>
         <li className="semiBold font15 pointer">
-          <Link
-            onClick={() => toggleSidebar(!sidebarOpen)}
-            activeClass="active"
-            className="whiteColor"
-            style={{ padding: "10px 15px" }}
-            to="/login"
-            spy={true}
-            smooth={true}
-            offset={-60}
-          >
-            Login
-          </Link>
+          {currentUser ? (
+            <Link
+              onClick={handleLogout}
+              className="whiteColor"
+              style={{ padding: "10px 15px" }}
+              to="/login"
+            >
+              Logout
+            </Link>
+          ) : (
+            <Link
+              onClick={() => toggleSidebar(!sidebarOpen)}
+              className="whiteColor"
+              style={{ padding: "10px 15px" }}
+              to="/login"
+            >
+              Login
+            </Link>
+          )}
         </li>
       </UlStyle>
     </Wrapper>
   );
 }
-
 const Wrapper = styled.nav`
   width: 400px;
   height: 100vh;

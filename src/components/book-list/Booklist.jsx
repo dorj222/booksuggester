@@ -2,7 +2,7 @@ import React from 'react';
 import './book-list.styles.css';
 import {Book} from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTrash, faInfoCircle, faBook,faBookmark} from '@fortawesome/free-solid-svg-icons';
+import {faTrash, faInfoCircle, faBookmark} from '@fortawesome/free-solid-svg-icons';
 import { firestore} from "../../firebase/firebase.utils";
 import { getDocs} from "firebase/firestore"; 
 
@@ -102,14 +102,9 @@ class BookList extends React.Component{
     render() { 
     
     let books = this.state.books;
-
     if(this.props.currentUser){
      return( 
         <div>
-             <h1 className="header">
-                <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
-            </h1> 
-
             <div className='card-list'>   
                 { books.map(
                     book =>(
@@ -142,9 +137,6 @@ class BookList extends React.Component{
     }else{
         return( 
             <div>
-                 <h1 className="header">
-                    <FontAwesomeIcon icon={faBook}></FontAwesomeIcon> Bookshelf
-                </h1> 
                 <div className='card-list'>  
                 </div>
             </div>
