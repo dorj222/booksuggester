@@ -10,7 +10,7 @@
     margin-bottom: 60px;
     margin-top: 60px;
     min-height: 70vh;
-    background-color: bisque;
+    background-color: #fff;
     column-gap: 60px;
   }
 
@@ -20,7 +20,7 @@
 
   button, #btnAbout, #btnDelete, .checkmark{
     /* margin: 10px 15px; */
-    background-color: bisque; 
+    background-color: #fff; 
     border: none;
     border-radius: 10px;
     color: black;
@@ -34,20 +34,19 @@
   
   button:hover {
     transition: 0.2s ease-in-out;
-    background: bisque;
+    background: #fff;
     text-decoration: underline;
   }
 
  .checkmark:hover {
     transition: 0.2s ease-in-out;
-    background: bisque;
+    background: #fff;
     text-decoration: underline;
   }
 
 
 label{
     margin-left: 8px;
-    background-color: bisque; 
     border: none;
     color: black;
     text-align: center;

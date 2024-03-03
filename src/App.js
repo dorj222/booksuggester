@@ -2,12 +2,11 @@ import { render } from '@testing-library/react';
 import { Component } from 'react/cjs/react.production.min';
 import './App.css';
 import {BookList} from './components/book-list/Booklist'; 
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import Navbar from './components/navbar/NavbarComponent';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import Navbar from './components/navbar/Navbar';
 import {Home} from './components/home/Home';
 import Login from './components/login/Login';
-import {auth, createUserProfileDocument, firestore} from './firebase/firebase.utils';
-import { doc, setDoc, collection, getDocs, addDoc } from "firebase/firestore"; 
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 class App extends Component{
 
