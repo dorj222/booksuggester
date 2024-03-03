@@ -131,7 +131,7 @@ class App extends Component{
     return (
      
       <div className="App">
-          <Router>
+          <Router basename="/booksuggester">
                   <Navbar currentUser={this.state.currentUser}/>
                   <Switch>
                           <Route exact path="/">
