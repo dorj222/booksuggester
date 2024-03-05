@@ -10,21 +10,21 @@ class SignIn extends React.Component {
         super(props)
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            errorMessage: '' 
         };
     }
 
     handleSubmit = async event => {
         event.preventDefault();
-        const history = this.props.history;
         const { email, password } = this.state;
         try {
             await auth.signInWithEmailAndPassword(email, password);
-            this.setState({ email: '', password: '' });
-            history.push("/");
+            this.setState({ email: '', password: '', showAlert: true }); // Show the alert on successful login
+            this.props.history.push("/");
         } catch (error) {
             console.log(error);
-            alert("The email or password are incorrect.")
+            this.setState({ errorMessage: "Invalid email or password!", showAlert: true });
         }
     };
 
@@ -35,8 +35,10 @@ class SignIn extends React.Component {
     render() {
         return (
             <SignInWrapper>
-                <h3>Sign In</h3>
-                <Form onSubmit={this.handleSubmit}>
+                <TitleWrapper>
+                    <h3>Sign In</h3>
+                </TitleWrapper>
+                <Form className='font12' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control
@@ -64,6 +66,11 @@ class SignIn extends React.Component {
                     </Form.Group>
                     <button class="btn btn-dark" type="submit" style={{ width: '100%' }}>Login</button>
                 </Form>
+                {this.state.showAlert && (
+                    <AlertWrapper className="alert alert-danger font13" role="alert">
+                       {this.state.errorMessage}
+                    </AlertWrapper>
+                )}
             </SignInWrapper>
         )
     }
@@ -74,6 +81,15 @@ export default withRouter(SignIn);
 const SignInWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: max-content;
+    width: 100%;
     text-align: start;
+`;
+
+const AlertWrapper = styled.div`
+    margin-top: 20px;
+    max-width: 100%;
+`;
+
+const TitleWrapper = styled.div`
+    text-align: center;
 `;

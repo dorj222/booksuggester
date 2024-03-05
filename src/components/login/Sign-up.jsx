@@ -13,11 +13,11 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
+            showAlert: false // Add state variable for controlling the alert
         }
     }
 
     handleSubmit = async event => {
-
         event.preventDefault();
         const { displayName, email, password, confirmPassword } = this.state;
         if (password !== confirmPassword) {
@@ -32,14 +32,14 @@ class SignUp extends React.Component {
                 displayName: '',
                 email: '',
                 password: '',
-                confirmPassword: ''
+                confirmPassword: '',
+                showAlert: false // Reset showAlert state
             });
             history.push("/");
         } catch (error) {
             console.error(error.message);
             if (error.message.toString().includes("auth/email-already-in-use")) {
-                alert("The email address is already in use by another account.");
-
+                this.setState({ showAlert: true }); // Show the alert for email already in use
             }
         }
     };
@@ -50,13 +50,14 @@ class SignUp extends React.Component {
     }
 
     render() {
-
-        const { displayName, email, password, confirmPassword } = this.state;
+        const { displayName, email, password, confirmPassword, showAlert } = this.state;
 
         return (
             <SignUpWrapper>
-                <h3>Sign Up</h3>
-                <Form onSubmit={this.handleSubmit}>
+                <TitleWrapper>
+                    <h3>Sign Up</h3>
+                </TitleWrapper>
+                <Form className='font12' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
@@ -110,8 +111,15 @@ class SignUp extends React.Component {
                             required
                         />
                     </Form.Group>
-                    <button type="submit" class="btn btn-dark" style={{ width: '100%' }}>Sign Up</button>
+                    <button type="submit" className="btn btn-dark" style={{ width: '100%' }}>Sign Up</button>
                 </Form>
+                <AlertWrapper>
+                    {showAlert && (
+                        <div className="alert alert-danger font13" role="alert">
+                            The email address is already in use by another account.
+                        </div>
+                    )}
+                </AlertWrapper>
             </SignUpWrapper>
         )
     }
@@ -122,6 +130,15 @@ export default withRouter(SignUp);
 const SignUpWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: max-content;
+    width: 100%;
     text-align: start;
+`;
+
+const AlertWrapper = styled.div`
+    margin-top: 20px;
+    max-width: 100%;
+`;
+
+const TitleWrapper = styled.div`
+    text-align: center;
 `;
