@@ -43,7 +43,7 @@ export default function Sidebar({ sidebarOpen, toggleSidebar, currentUser }) {
             activeClass="active"
             className="whiteColor"
             style={{ padding: "10px 15px" }}
-            to="/book-list"
+            to="/bookshelf"
           >
             Bookshelf
           </Link>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './book-list.styles.css';
+import './bookshelf.styles.css';
 import { Book } from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faInfoCircle, faBookmark } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import { firestore } from "../../firebase/firebase.utils";
 import EmptyIcon from "../../assets/svg/Empty";
 import styled from "styled-components";
 
-class BookList extends React.Component {
+class Bookshelf extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -114,7 +114,7 @@ class BookList extends React.Component {
         );
     }
 }
-export { BookList };
+export { Bookshelf };
 
 
 const WrapperCardList = styled.nav`

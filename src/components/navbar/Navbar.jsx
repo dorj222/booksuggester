@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import Backdrop from "../elements/Backdrop";
+import Backdrop from "../../assets/svg/Backdrop";
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 import { auth } from '../../firebase/firebase.utils';
@@ -37,7 +37,7 @@ export default function TopNavbar(props) { // Change here
               <StyledNavLink exact to="/" activeClassName="active">Home</StyledNavLink>
             </li>
             <li>
-              <StyledNavLink to="/book-list" activeClassName="active">Bookshelf</StyledNavLink>
+              <StyledNavLink to="/bookshelf" activeClassName="active">Bookshelf</StyledNavLink>
             </li>
             {currentUser ? (
               <li>
@@ -65,6 +65,7 @@ const Wrapper = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
 `;
 const NavInner = styled.div`
   display: flex;

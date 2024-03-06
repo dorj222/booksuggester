@@ -44,7 +44,7 @@ const LoginWrapper = styled.div`
         border: 1px solid #ccc;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        padding: 20px; /* Add some padding */
+        padding: 20px; 
     }
 
     .form {
