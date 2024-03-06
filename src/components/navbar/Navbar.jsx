@@ -7,8 +7,8 @@ import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 import { auth } from '../../firebase/firebase.utils';
 
-export default function TopNavbar(props) { // Change here
-  const { currentUser } = props; // Change here
+export default function TopNavbar(props) { 
+  const { currentUser } = props; 
   const [y, setY] = useState(window.scrollY);
   const [sidebarOpen, toggleSidebar] = useState(false);
 

@@ -4,7 +4,6 @@ import Navbar from '../components/navbar/Navbar';
 import { Home } from '../components/home/Home';
 import Login from '../components/login/Login';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
-import styled from "styled-components";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 class LandingPage extends Component {

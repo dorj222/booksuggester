@@ -8,7 +8,7 @@ import { auth } from '../../firebase/firebase.utils';
 export default function Sidebar({ sidebarOpen, toggleSidebar, currentUser }) {
   const handleLogout = () => {
     auth.signOut();
-    toggleSidebar(false); // Close the sidebar after logout
+    toggleSidebar(false); 
   };
 
   return (

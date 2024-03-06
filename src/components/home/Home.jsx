@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faForward, faHeart, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { firestore } from "../../firebase/firebase.utils"
 import styled from "styled-components";
+import { Toast } from 'react-bootstrap';
+
 
 class Home extends React.Component {
 
@@ -12,7 +14,8 @@ class Home extends React.Component {
     super();
 
     this.state = {
-      hasBtnMoreClicked: false
+      hasBtnMoreClicked: false,
+      showToast: false
     };
   }
 
@@ -40,13 +43,11 @@ class Home extends React.Component {
   }
 
   handleClickSave() {
-
     if (!this.props.currentUser) {
-      alert("Please sign in!");
-      return
+      this.setState({ showToast: true });
+      return;
     }
     else {
-
       try {
         const response = async () => {
           firestore.collection("users").doc(this.props.currentUser.id).collection('books').add(
@@ -73,30 +74,46 @@ class Home extends React.Component {
   render() {
 
     return (
-        <div className="homeContainer">
-          <Book
-            title={this.props.title}
-            authors={this.props.authors}
-            subject={this.props.subject}
-            genre={this.props.genre}
-            background={this.props.background}
-            hasBtnMoreClicked={this.state.hasBtnMoreClicked}
-          />
+      <div className="homeContainer">
+        <Book
+          title={this.props.title}
+          authors={this.props.authors}
+          subject={this.props.subject}
+          genre={this.props.genre}
+          background={this.props.background}
+          hasBtnMoreClicked={this.state.hasBtnMoreClicked}
+        />
 
-          <div className='btnContainer'>
-            <button id="btnAbout" onClick={() => this.handleClickDetail()} >
-              more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
-            </button>
-            <button id="btnBookMark" onClick={() => this.handleClickSave()}>
-              save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-            </button>
-            <button id="btnNext" onClick={() =>
-              this.handleClickNext()
-            }>
-              next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
-            </button>
-          </div>
+        <div className='btnContainer'>
+          <button id="btnAbout" onClick={() => this.handleClickDetail()} >
+            more <FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon>
+          </button>
+          <button id="btnBookMark" onClick={() => this.handleClickSave()}>
+            save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+          </button>
+          <button id="btnNext" onClick={() =>
+            this.handleClickNext()
+          }>
+            next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
+          </button>
         </div>
+
+        <Toast
+          show={this.state.showToast}
+          onClose={() => this.setState({ showToast: false })}
+          style={{
+            position: 'absolute',
+            top: 120,
+            right: 20,
+          }}
+        >
+          <Toast.Header className='d-flex justify-content-between font12'>
+            <strong className="mr-auto">Sign in Reminder</strong>
+          </Toast.Header>
+          <Toast.Body className='font12'>Please sign in to save the book in the bookshelf.</Toast.Body>
+        </Toast>
+
+      </div>
     );
   }
 };
