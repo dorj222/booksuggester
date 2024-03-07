@@ -1,51 +1,45 @@
 .card-container {
-    display: flex;
-    flex-direction: column;
-    background-color: #95dada;
-    border: 0.5px solid grey;
-    border-left: 1px solid black;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    padding: 25px;
-    cursor: pointer;
-    -moz-osx-font-smoothing: grayscale;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    width: 260px;
-    min-height: 380px;
-    margin: 0 auto;
-    align-items: center;
-    justify-content: space-around;
-    box-shadow: 4px 1.8px #888888;
-    transition: all 1s ease;
-  }
-  
-  .card-container:hover {
-    transform: scale(1.01);
-    transition: transform 0.5s ease-out;
-  }
-  
-  span{
-    color: black;
-    text-align: start !important;
-    font-size: 12px;
-    transition:all 1s ease;
-    margin-bottom: 7px;
-  }
+  display: flex;
+  flex-direction: column;
+  border: 0.5px solid grey;
+  border-left: 1px solid black;
+  border-radius: 8px;
+  padding: 25px;
+  cursor: pointer;
+  width: 260px;
+  min-height: 380px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 4px 1.8px #888888;
+  transition: all 1s ease;
+}
 
+.card-container:hover {
+  transform: scale(1.01);
+  transition: transform 0.5s ease-out;
+}
 
-  .detail{
-    justify-content: center;
-    align-items: flex-start; 
-  }
+span{
+  color: black;
+  text-align: start !important;
+  font-size: 12px;
+  transition:all 1s ease;
+  margin-bottom: 7px;
+}
 
-  @media only screen and (max-width: 600px) {
-    .card-container{
-      width: 220px;
-      min-height: 330px;
-      padding: 10px;
-    }
-    h6{
-      font-size: 15px !important;
-    }
+.detail{
+  justify-content: center;
+  align-items: flex-start; 
+}
+
+@media only screen and (max-width: 600px) {
+  .card-container{
+    width: 220px;
+    min-height: 330px;
+    padding: 10px;
   }
+  h6{
+    font-size: 15px !important;
+  }
+}

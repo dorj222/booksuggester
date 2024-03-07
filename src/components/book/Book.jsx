@@ -1,43 +1,49 @@
-import React from 'react';
-import './book.style.css'
+import React, { Component } from 'react';
+import './book.style.css';
 
-class Book extends React.Component {
+class Book extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showInfo: false
+    };
+  }
+
+  toggleHoverState(state) {
+    return { showInfo: !state.showInfo }
+  }
 
   render() {
-
-    let divStyleDetail = { display: "none" };
-    let divStyleCover = { display: "block" };
-
-    if (this.props.hasBtnMoreClicked) {
-      divStyleDetail = { display: "flex", flexDirection: "column" }
-      divStyleCover = { display: "none" }
-    } else {
-      divStyleDetail = { display: "none" }
-      divStyleCover = { display: "block" }
-    }
+    const { title, background, authors, subject, genre } = this.props;
+    const { showInfo } = this.state;
 
     return (
-      <div className="card-container" style={{ backgroundColor: this.props.background }}>
-        {this.props.title && (
-          <h6 style={divStyleCover} className='hasBtnMoreClicked'> {this.props.title} </h6>
-        )}
-        <div style={divStyleDetail} className='detail'>
-          {[
-            { label: "Title", value: this.props.title },
-            { label: "Authors", value: this.props.authors },
-            { label: "Subject", value: this.props.subject },
-            { label: "Category", value: this.props.genre },
-            { label: "Language", value: "English" },
-            { label: "Copyright status in the US", value: "Public domain" }
-          ].map((item, index) => (
-            item.value && <span key={index} className="detail">{`${item.label}: ${item.value}`}</span>
-          ))}
-        </div>
-        {this.props.authors && (
-          <span style={divStyleCover} className="font12">{this.props.authors}</span>
+      <div 
+        className="card-container" 
+        style={{ backgroundColor: background }}
+        onMouseEnter={() => this.setState(this.toggleHoverState)}
+        onMouseLeave={() => this.setState(this.toggleHoverState)}
+      > 
+        {!showInfo ? (
+          <>
+            <h6>{title}</h6>
+            <span className="font12">{authors}</span>
+          </>
+        ) : (
+          <div className='detail'>
+            {[
+              { label: "Title", value: title },
+              { label: "Authors", value: authors },
+              { label: "Subject", value: subject },
+              { label: "Category", value: genre },
+            ].map((item, index) => (
+              item.value && <span key={index} className="detail">{`${item.label}: ${item.value}`}</span>
+            ))}
+          </div>
         )}
       </div>
     );
   }
 }
+
 export { Book };

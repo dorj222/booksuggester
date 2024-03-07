@@ -2,7 +2,7 @@ import React from 'react';
 import './bookshelf.styles.css';
 import { Book } from '../book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faInfoCircle, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { firestore } from "../../firebase/firebase.utils";
 import EmptyIcon from "../../assets/svg/Empty";
 import styled from "styled-components";
@@ -11,7 +11,8 @@ class Bookshelf extends React.Component {
     constructor() {
         super();
         this.state = {
-            books: []
+            books: [],
+            hasHoveredOver: false,
         }
     };
 
@@ -49,24 +50,7 @@ class Bookshelf extends React.Component {
                     console.log(res);
                 })
                 .catch((error) => {
-                    console.error("Error deleting a document: ", error);
-                })
-            );
-        }
-        response();
-        this.componentDidMount()
-    }
-
-    handleClickUpdateMore(bookID, hasMoreClicked) {
-        const response = async () => {
-            await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).update({
-                "hasMoreClicked": !hasMoreClicked
-            })
-                .then(res => {
-                    console.log(res);
-                })
-                .catch((error) => {
-                    console.error("Error deleting a document: ", error);
+                    console.error("Error updating a document: ", error);
                 })
             );
         }
@@ -89,11 +73,7 @@ class Bookshelf extends React.Component {
                                 subject={book.subject}
                                 genre={book.genre}
                                 background={book.background}
-                                hasBtnMoreClicked={book.hasMoreClicked}
                             />
-                            <button id="btnAbout" onClick={() => this.handleClickUpdateMore(book.id, book.hasMoreClicked)}>
-                                <FontAwesomeIcon icon={faInfoCircle} /> more
-                            </button>
                             <button id="btnDelete" onClick={() => this.handleClickDelete(book.id)}>
                                 <FontAwesomeIcon icon={faTrash} /> delete
                             </button>
