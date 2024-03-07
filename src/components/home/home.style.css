@@ -2,7 +2,6 @@
 .btnContainer{
     margin-top: 20px;
   }
-  
   button{
     margin-right: 5px; 
     border: none;
@@ -16,8 +15,8 @@
     font-size: 14px;
     margin: 4px 10px;
     cursor: pointer;
+    background-color: #fff;
   }
-  
   button:hover {
     transition: 0.2s ease-in-out;
     text-decoration: underline;
@@ -36,3 +35,4 @@
         font-size: small;
     }
 }
+
