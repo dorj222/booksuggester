@@ -11,6 +11,7 @@ class LandingPage extends Component {
         super();
         this.state = {
             book: [],
+            books: [],
             authors: '',
             title: '',
             subject: '',
@@ -46,31 +47,59 @@ class LandingPage extends Component {
         this.unsubscribeFromAuth();
     }
 
-    callAPI() {
-        const randomNumber = Math.floor(Math.random() * 1000);
-        let URL = `https://gutendex.com/books/?ids=${randomNumber}`;
-
-        const response = async () => {
-            fetch(URL)
-                .then(response => response.json())
-                .then(
-                    (response) => {
-                        this.setState({
-                            book: response.results[0],
-                            title: this.getTitleName(response.results[0].title),
-                            authors: this.getAuthors(response.results[0].authors),
-                            subject: this.getRepsonse(response.results[0].subjects),
-                            genre: this.getRepsonse(response.results[0].bookshelves),
-                            background: this.generateBackground(),
-                        })
-                    }, (error) => {
-                        this.setState({
-                            isLoaded: true,
-                            error
-                        });
-                    })
+    selectRandomBook() {
+        if (this.state.books.length > 0) {
+            const randomBookIndex = Math.floor(Math.random() * this.state.books.length);
+            const bookData = this.state.books[randomBookIndex];
+            const remainingBooks = this.state.books.filter((book, index) => index !== randomBookIndex);
+            this.setState({
+                book: bookData,
+                title: this.getTitleName(bookData.title),
+                authors: this.getAuthors(bookData.authors),
+                subject: this.getRepsonse(bookData.subjects),
+                genre: this.getRepsonse(bookData.bookshelves),
+                background: this.generateBackground(),
+                books: remainingBooks, // updating the state with the remaining books
+            }, () => {
+                // checking if there are no more books left in the state
+                if (this.state.books.length === 0) {
+                    // if so, fetch a new set of books
+                    this.callAPI();
+                }
+            });
         }
-        response();
+    }
+
+    callAPI() {
+        if (this.state.books && this.state.books.length > 0) {
+            this.selectRandomBook();
+        } else {
+            const fetchRandomPage = () => {
+                const randomPageNumber = Math.floor(Math.random() * 1000) + 1;
+                let URL = `https://gutendex.com/books/?author_year_start=0&languages=en&page=${randomPageNumber}`;
+                fetch(URL)
+                    .then(response => response.json())
+                    .then(
+                        (response) => {
+                            console.log("response: ", response);
+                            if (response && response.results && response.results.length > 0) {
+                                // Save all the books in the React state.
+                                this.setState({ books: response.results }, this.selectRandomBook);
+                            } else {
+                                // Recall the API if no results are found.
+                                fetchRandomPage();
+                            }
+                        },
+                        (error) => {
+                            this.setState({
+                                isLoaded: true,
+                                error
+                            });
+                        }
+                    );
+            };
+            fetchRandomPage();
+        }
     }
 
     getTitleName(response) {
