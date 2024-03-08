@@ -17,7 +17,8 @@ class LandingPage extends Component {
             subject: '',
             genre: '',
             background: '',
-            currentUser: null
+            currentUser: null,
+            isLoading: false, 
         };
     }
 
@@ -59,7 +60,8 @@ class LandingPage extends Component {
                 subject: this.getRepsonse(bookData.subjects),
                 genre: this.getRepsonse(bookData.bookshelves),
                 background: this.generateBackground(),
-                books: remainingBooks, // updating the state with the remaining books
+                books: remainingBooks,
+                isLoading: false,
             }, () => {
                 // checking if there are no more books left in the state
                 if (this.state.books.length === 0) {
@@ -71,6 +73,7 @@ class LandingPage extends Component {
     }
 
     callAPI() {
+        this.setState({ isLoading: true }); 
         if (this.state.books && this.state.books.length > 0) {
             this.selectRandomBook();
         } else {
@@ -170,6 +173,7 @@ class LandingPage extends Component {
                                 subject={this.state.subject}
                                 genre={this.state.genre}
                                 background={this.state.background}
+                                isLoading={this.state.isLoading}  
                             />
                         </Route>
 

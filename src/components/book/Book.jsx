@@ -29,8 +29,8 @@ class Book extends Component {
         <ContentContainer>
           {!showInfo ? (
             <>
-              <Title>{title}</Title>
-              <Authors>{authors}</Authors>
+              <Title>{title.length > 120 ? title.substring(0, 120) + '...' : title}</Title>
+              <Authors>{authors.length > 120 ? title.substring(0, 120) + '...' : authors}</Authors>
             </>
           ) : (
             <DetailContainer className='font12'>
@@ -43,7 +43,7 @@ class Book extends Component {
                 item.value && (
                   <span key={index}>
                     <DetailLabel>{item.label}:</DetailLabel>
-                    <DetailValue>{item.value}</DetailValue>
+                    <DetailValue>{item.value.length > 120 ? item.value.substring(0, 120) + '...' : item.value}</DetailValue>
                   </span>
                 )
               ))}
@@ -74,7 +74,7 @@ const CardContainer = styled.div`
   cursor: pointer;
   width: 260px;
   font-family: Garamond, serif;
-  min-height: 380px;
+  height: 380px;
   align-items: center;
   justify-content: space-around;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -98,6 +98,7 @@ const ContentContainer = styled.div``;
 
 const Title = styled.h6`
   margin: 0;
+  text-overflow: ellipsis;
   animation: ${fadeInOut} 1s ease;
 `;
 

@@ -2,9 +2,10 @@ import React from 'react';
 import { Book } from '../book/Book'
 import './home.style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faForward, faHeart,  } from '@fortawesome/free-solid-svg-icons';
 import { firestore } from "../../firebase/firebase.utils"
-import { Toast } from 'react-bootstrap';
+import { Toast, Spinner } from 'react-bootstrap';
+
 
 
 class Home extends React.Component {
@@ -60,17 +61,16 @@ class Home extends React.Component {
           subject={this.props.subject}
           genre={this.props.genre}
           background={this.props.background}
+          isLoading={this.props.isLoading}
         />
 
         <div className='btnContainer'>
           <button id="btnBookMark" onClick={() => this.handleClickSave()}>
-            save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
+          {this.props.isLoading ? <Spinner animation="border" size="sm" /> : <>save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></> }
           </button>
-          <button id="btnNext" onClick={() =>
-            this.handleClickNext()
-          }>
-            next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon>
-          </button>
+          <button id="btnNext" onClick={() => this.handleClickNext()} disabled={this.state.isLoading}>
+             {this.props.isLoading ? <Spinner animation="border" size="sm" /> : <>next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon></> }
+            </button>
         </div>
 
         <Toast
