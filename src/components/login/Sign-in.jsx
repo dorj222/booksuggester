@@ -34,13 +34,13 @@ class SignIn extends React.Component {
     };
     render() {
         return (
-            <SignInWrapper>
+            <SignInWrapper className='font12'>
                 <TitleWrapper>
-                    <h3>Sign In</h3>
+                    <h4>Sign In</h4>
                 </TitleWrapper>
                 <Form className='font12' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label >Email address</Form.Label>
                         <Form.Control
                             type="email"
                             name="email"
@@ -48,6 +48,7 @@ class SignIn extends React.Component {
                             placeholder="Enter email"
                             value={this.state.email}
                             onChange={this.handleChange}
+                            className='font12'
                             required
                         />
                     </Form.Group>
@@ -60,14 +61,15 @@ class SignIn extends React.Component {
                             placeholder="Enter password"
                             value={this.state.password}
                             onChange={this.handleChange}
+                            className='font12'
                             label="password"
                             required
                         />
                     </Form.Group>
-                    <button class="btn btn-dark" type="submit" style={{ width: '100%' }}>Login</button>
+                    <button class="btn btn-dark font12" type="submit" style={{ width: '100%' }}>Login</button>
                 </Form>
                 {this.state.showAlert && (
-                    <AlertWrapper className="alert alert-danger font13" role="alert">
+                    <AlertWrapper className="alert alert-danger font12" role="alert">
                        {this.state.errorMessage}
                     </AlertWrapper>
                 )}

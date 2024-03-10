@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -42,7 +44,7 @@ a {
   color: #0B093B;
 }
 a:hover {
-  color: #7620FF;
+  color: #025464;
 }
 input:-webkit-autofill {
   -webkit-box-shadow:0 0 0 50px #fff inset; /* Change the color to your own background color */
@@ -50,9 +52,9 @@ input:-webkit-autofill {
   -webkit-text-fill-color: #fff;
 }
 body {
-  background: #fff;
+  background: #fff !important;
   color: #0B093B;
-  font-family: 'Khula', sans-serif;
+  font-family: 'Raleway', sans-serif !important;
   overflow-x: hidden;
   font-size: 16px;
   font-weight: 400;
@@ -104,8 +106,8 @@ body {
   width: 100%;
 }
 .active {
-  border-bottom: 2px solid #7620FF;
-  color: #7620FF;
+  border-bottom: 2px solid #025464 !important;
+  color: #025464 !important;
 }
 .tag {
   padding: 5px 10px;
@@ -186,9 +188,17 @@ body {
 }
 .font60 {
   font-size: 3.75rem;
-  line-height: 4.5rem;
 }
-@media only screen and (max-width: 859px) {
+/* Form */
+.loginForm {
+  font-size: 0.75rem !important;
+}
+@media only screen and (max-width: 1200px) {
+  .font60 {
+    font-size: 2.2rem;
+  }
+}
+@media only screen and (max-width: 900px) {
   .font11 {
     font-size: 0.688rem;
   }
@@ -217,10 +227,10 @@ body {
     font-size: 1.5rem;
   }
   .font40 {
-    font-size: 1.875rem;
+    font-size: 1.7rem;
   }
   .font60 {
-    font-size: 2.8rem;
+    font-size: 1.9rem;
   }
 }
 /* BORDER RADIUS */
@@ -235,7 +245,7 @@ body {
   color: #0B093B;
 }
 .purpleColor {
-  color: #7620FF;
+  color: #025464;
 }
 .orangeColor {
   color: #F2B300;
@@ -258,9 +268,6 @@ body {
 /* BACKGROUNDS */
 .darkBg {
   background-color: #0B093B;
-}
-.purpleBg {
-  background-color: #7620FF;
 }
 .orangeBg {
   background-color: #F2B300;

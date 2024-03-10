@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SignIn from './Sign-in';
-import SignUp from './Sign-up';
+import SignIn from '../components/login/Sign-in';
+import SignUp from '../components/login/Sign-up';
 import styled from 'styled-components';
 
 const Login = () => {
@@ -16,12 +16,12 @@ const Login = () => {
                 <div className="form">
                     {isSignIn ? <SignIn /> : <SignUp />}
                 </div>
-                <div className="toggleButton font13">
+                <div className="toggleButton font12">
                     <SignUpText>
                         {isSignIn ? "Don't have an account? " : "Already have an account? "}
-                        <button onClick={toggleForm}>
+                        <Button onClick={toggleForm}>
                             {isSignIn ? "Sign Up" : "Sign In"}
-                        </button>
+                        </Button>
                     </SignUpText>
                 </div>
             </div>
@@ -44,7 +44,7 @@ const LoginWrapper = styled.div`
         border: 1px solid #ccc;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        padding: 20px; 
+        padding: 20px;
     }
 
     .form {
@@ -60,4 +60,24 @@ const LoginWrapper = styled.div`
 const SignUpText = styled.div`
     text-align: center;
     margin-top: 20px;
+`;
+
+const Button = styled.button`
+  margin-right: 5px;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin: 4px 10px;
+  cursor: pointer;
+  background-color: #fff;
+
+  &:hover {
+    transition: 0.2s ease-in-out;
+    text-decoration: underline;
+  }
 `;

@@ -55,11 +55,11 @@ class SignUp extends React.Component {
         return (
             <SignUpWrapper>
                 <TitleWrapper>
-                    <h3>Sign Up</h3>
+                    <h4>Sign Up</h4>
                 </TitleWrapper>
                 <Form className='font12' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Username</Form.Label>
+                        <Form.Label className='font12'>Username</Form.Label>
                         <Form.Control
                             type="text"
                             name="displayName"
@@ -67,12 +67,13 @@ class SignUp extends React.Component {
                             placeholder="Username"
                             value={displayName}
                             onChange={this.handleChange}
+                            className='font12'
                             required
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label className='font12'>Email address</Form.Label>
                         <Form.Control
                             type="email"
                             name="email"
@@ -80,12 +81,13 @@ class SignUp extends React.Component {
                             placeholder="Enter email"
                             value={email}
                             onChange={this.handleChange}
+                            className='font12'
                             required
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label className='font12'>Password</Form.Label>
                         <Form.Control
                             type="password"
                             name="password"
@@ -93,13 +95,14 @@ class SignUp extends React.Component {
                             value={password}
                             minLength="6"
                             onChange={this.handleChange}
+                            className='font12'
                             label="password"
                             required
                         />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Label className='font12'>Confirm Password</Form.Label>
                         <Form.Control
                             type="password"
                             name="confirmPassword"
@@ -107,15 +110,16 @@ class SignUp extends React.Component {
                             value={confirmPassword}
                             minLength="6"
                             onChange={this.handleChange}
+                            className='font12'
                             label="Confirm Password"
                             required
                         />
                     </Form.Group>
-                    <button type="submit" className="btn btn-dark" style={{ width: '100%' }}>Sign Up</button>
+                    <button type="submit" className="btn btn-dark font12" style={{ width: '100%' }}>Sign Up</button>
                 </Form>
                 <AlertWrapper>
                     {showAlert && (
-                        <div className="alert alert-danger font13" role="alert">
+                        <div className="alert alert-danger font12" role="alert">
                             The email address is already in use by another account.
                         </div>
                     )}

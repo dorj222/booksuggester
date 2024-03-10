@@ -10,7 +10,7 @@ import { auth } from '../../firebase/firebase.utils';
 export default function TopNavbar(props) { 
   const { currentUser } = props; 
   const [y, setY] = useState(window.scrollY);
-  const [sidebarOpen, toggleSidebar] = useState(false);
+  const [sidebaropen, toggleSidebar] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", () => setY(window.scrollY));
@@ -21,20 +21,23 @@ export default function TopNavbar(props) {
 
   return (
     <>
-      <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} currentUser={currentUser} />
-      {sidebarOpen && <Backdrop toggleSidebar={toggleSidebar} />}
+      <Sidebar sidebaropen={sidebaropen} toggleSidebar={toggleSidebar} currentUser={currentUser} />
+      {sidebaropen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper style={{ height: y > 100 ? "60px" : "80px" }}>
         <NavInner>
           <LinkWrapper to="/" className="flexNullCenter pointer" activeClassName="inactive">
             <LogoIcon />
             <h5 style={{ marginLeft: "5px", marginTop: "5px" }} >BookSuggester</h5>
           </LinkWrapper>
-          <BurgerWrapper onClick={() => toggleSidebar(!sidebarOpen)}>
+          <BurgerWrapper onClick={() => toggleSidebar(!sidebaropen)}>
             <BurgerIcon />
           </BurgerWrapper>
           <NavLinks>
             <li>
               <StyledNavLink exact to="/" activeClassName="active">Home</StyledNavLink>
+            </li>
+            <li>
+              <StyledNavLink to="/discover" activeClassName="active">Discover</StyledNavLink>
             </li>
             <li>
               <StyledNavLink to="/bookshelf" activeClassName="active">Bookshelf</StyledNavLink>

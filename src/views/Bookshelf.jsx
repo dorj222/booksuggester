@@ -1,9 +1,9 @@
 import React from 'react';
-import { Book } from '../book/Book';
+import { Book } from '../components/book/Book';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { firestore } from "../../firebase/firebase.utils";
-import EmptyIcon from "../../assets/svg/Empty";
+import { firestore } from "../firebase/firebase.utils";
+import EmptyIcon from "../assets/svg/Empty";
 import styled from "styled-components";
 import StarRatingComponent from 'react-star-rating-component';
 
@@ -19,6 +19,9 @@ class Bookshelf extends React.Component {
 
     async componentDidMount() {
         try {
+            if (!this.props.currentUser) {
+                return;
+            }
             const snapshot = await firestore.collection("users").doc(this.props.currentUser.id).collection('books').get();
             const dataBooks = snapshot.docs.map(doc => {
                 const data = doc.data();
@@ -64,51 +67,62 @@ class Bookshelf extends React.Component {
 
     render() {
         const { books } = this.state;
-        return (
-            <WrapperCardList>
-                {this.props.currentUser && books.length > 0 ? (
-                    books.map(book => (
-                        <div key={book.id}>
-                            <Book
-                                key={book.id}
-                                className="book"
-                                title={book.title}
-                                authors={book.authors}
-                                subject={book.subject}
-                                genre={book.genre}
-                                background={book.background}
-                            />
-                            <WrapperStarRating>
-                                <HoverableStarRating>
-                                    <StarRatingComponent className="starRating"
-                                        name={"rate" + book.id}
-                                        starCount={5}
-                                        value={book.hasRead}
-                                        starColor="#ffd700" 
-                                        emptyStarColor={"grey"}
-                                        onStarClick={(nextValue) => this.handleClickUpdateRead(book.id, nextValue)}
-                                    />
-                                </HoverableStarRating>
-                                <DeleteIcon icon={faTrash} onClick={() => this.handleClickDelete(book.id)}/>
-                            </WrapperStarRating>
-                            
-                            
-                        </div>
-                    ))
-                ) : (
+        if (!this.props.currentUser) {
+            return (
+                <WrapperCardList>
                     <WrapperMessage>
                         <div className='flexColumn flexCenter'>
                             <EmptyIcon />
                             <span className='font20'>No books found</span>
                         </div>
                     </WrapperMessage>
-                )}
-            </WrapperCardList>
-        );
+                </WrapperCardList>
+            )
+        }
+        else {
+            return (
+                <WrapperCardList>
+                    {this.props.currentUser && books.length > 0 ? (
+                        books.map(book => (
+                            <div key={book.id}>
+                                <Book
+                                    key={book.id}
+                                    className="book"
+                                    title={book.title}
+                                    authors={book.authors}
+                                    subject={book.subject}
+                                    genre={book.genre}
+                                    background={book.background}
+                                />
+                                <WrapperStarRating>
+                                    <HoverableStarRating>
+                                        <StarRatingComponent className="starRating"
+                                            name={"rate" + book.id}
+                                            starCount={5}
+                                            value={book.hasRead}
+                                            starColor="#ffd700"
+                                            emptyStarColor={"grey"}
+                                            onStarClick={(nextValue) => this.handleClickUpdateRead(book.id, nextValue)}
+                                        />
+                                    </HoverableStarRating>
+                                    <DeleteIcon icon={faTrash} onClick={() => this.handleClickDelete(book.id)} />
+                                </WrapperStarRating>
+                            </div>
+                        ))
+                    ) : (
+                        <WrapperMessage>
+                            <div className='flexColumn flexCenter'>
+                                <EmptyIcon />
+                                <span className='font20'>No books found</span>
+                            </div>
+                        </WrapperMessage>
+                    )}
+                </WrapperCardList>
+            );
+        }
     }
 }
-export { Bookshelf };
-
+export default Bookshelf;
 
 const WrapperCardList = styled.nav`
     width: 55vw;
