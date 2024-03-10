@@ -25,7 +25,7 @@ class Bookshelf extends React.Component {
             const snapshot = await firestore.collection("users").doc(this.props.currentUser.id).collection('books').get();
             const dataBooks = snapshot.docs.map(doc => {
                 const data = doc.data();
-                data.hasRead = data.hasRead || 0; // add this line.
+                data.hasRated = data.hasRated || 0; 
                 return { id: doc.id, ...data };
             });
             this.setState({ books: dataBooks });
@@ -52,11 +52,11 @@ class Bookshelf extends React.Component {
     handleClickUpdateRead = async (bookID, rating) => {
         try {
             await firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).update({
-                "hasRead": rating
+                "hasRated": rating
             });
 
             const books = this.state.books.map(book =>
-                book.id === bookID ? { ...book, hasRead: rating } : book
+                book.id === bookID ? { ...book, hasRated: rating } : book
             );
 
             this.setState({ books });
@@ -99,7 +99,7 @@ class Bookshelf extends React.Component {
                                         <StarRatingComponent className="starRating"
                                             name={"rate" + book.id}
                                             starCount={5}
-                                            value={book.hasRead}
+                                            value={book.hasRated}
                                             starColor="#ffd700"
                                             emptyStarColor={"grey"}
                                             onStarClick={(nextValue) => this.handleClickUpdateRead(book.id, nextValue)}

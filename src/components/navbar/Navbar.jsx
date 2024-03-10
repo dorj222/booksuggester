@@ -21,7 +21,7 @@ export default function TopNavbar(props) {
 
   return (
     <>
-      <Sidebar sidebaropen={sidebaropen} toggleSidebar={toggleSidebar} currentUser={currentUser} />
+      <Sidebar sidebaropen={sidebaropen.toString()} toggleSidebar={toggleSidebar} currentUser={currentUser} />
       {sidebaropen && <Backdrop toggleSidebar={toggleSidebar} />}
       <Wrapper style={{ height: y > 100 ? "60px" : "80px" }}>
         <NavInner>
@@ -34,21 +34,21 @@ export default function TopNavbar(props) {
           </BurgerWrapper>
           <NavLinks>
             <li>
-              <StyledNavLink exact to="/" activeClassName="active">Home</StyledNavLink>
+              <StyledNavLink exact to="/" className={window.location.pathname === "/" ? "active" : ""}>Home</StyledNavLink>
             </li>
             <li>
-              <StyledNavLink to="/discover" activeClassName="active">Discover</StyledNavLink>
+              <StyledNavLink to="/discover" className={window.location.pathname === "/discover" ? "active" : ""}>Discover</StyledNavLink>
             </li>
             <li>
-              <StyledNavLink to="/bookshelf" activeClassName="active">Bookshelf</StyledNavLink>
+              <StyledNavLink to="/bookshelf" className={window.location.pathname === "/bookshelf" ? "active" : ""}>Bookshelf</StyledNavLink>
             </li>
             {currentUser ? (
               <li>
-                <StyledNavLink to="/login" activeClassName="active" onClick={() => auth.signOut()}>Logout</StyledNavLink>
+                <StyledNavLink to="/login" className={window.location.pathname === "/login" ? "active" : ""} onClick={() => auth.signOut()}>Logout</StyledNavLink>
               </li>
             ) : (
               <li>
-                <StyledNavLink to="/login" activeClassName="active">Login</StyledNavLink>
+                <StyledNavLink to="/login" className={window.location.pathname === "/login" ? "active" : ""}>Login</StyledNavLink>
               </li>
             )}
           </NavLinks>

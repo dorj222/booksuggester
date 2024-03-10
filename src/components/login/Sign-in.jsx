@@ -66,7 +66,7 @@ class SignIn extends React.Component {
                             required
                         />
                     </Form.Group>
-                    <button class="btn btn-dark font12" type="submit" style={{ width: '100%' }}>Login</button>
+                    <button className="btn btn-dark font12" type="submit" style={{ width: '100%' }}>Login</button>
                 </Form>
                 {this.state.showAlert && (
                     <AlertWrapper className="alert alert-danger font12" role="alert">

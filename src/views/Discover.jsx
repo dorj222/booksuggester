@@ -9,6 +9,7 @@ import styled from 'styled-components';
 class Discover extends React.Component {
   constructor(props) {
     super(props);
+    this._isMounted = false;
     this.state = {
       showToast: false,
       book: [],
@@ -23,7 +24,14 @@ class Discover extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
+    this.abortController = new AbortController();
     this.callAPI();
+  }
+  
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.abortController.abort();
   }
 
   handleClickNext() {
@@ -38,17 +46,18 @@ class Discover extends React.Component {
     else {
       try {
         const response = async () => {
-          firestore.collection("users").doc(this.props.currentUser.id).collection('books').add(
-            {
-              "title": this.state.title,
-              "authors": this.state.authors,
-              "subject": this.state.subject,
-              "genre": this.state.genre,
-              "background": this.state.background,
-              "hasRead": false,
-              "hasMoreClicked": false
-            }
-          );
+          if (this._isMounted) {
+            firestore.collection("users").doc(this.props.currentUser.id).collection('books').add(
+              {
+                "title": this.state.title,
+                "authors": this.state.authors,
+                "subject": this.state.subject,
+                "genre": this.state.genre,
+                "background": this.state.background,
+                "hasRated": false,
+              }
+            );
+          }
         }
         response();
         this.handleClickNext()
@@ -90,7 +99,7 @@ class Discover extends React.Component {
       const fetchRandomPage = () => {
         const randomPageNumber = Math.floor(Math.random() * 1000) + 1;
         let URL = `https://gutendex.com/books/?author_year_start=0&languages=en&page=${randomPageNumber}`;
-        fetch(URL)
+        fetch(URL, { signal: this.abortController.signal })
           .then(response => response.json())
           .then(
             (response) => {

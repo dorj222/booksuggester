@@ -29,7 +29,6 @@ export default function Sidebar({ sidebaropen, toggleSidebar, currentUser }) {
         <li className="semiBold font15 pointer">
           <Link
             onClick={() => toggleSidebar(!sidebaropen)}
-            activeClass="active"
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="/"
@@ -40,7 +39,6 @@ export default function Sidebar({ sidebaropen, toggleSidebar, currentUser }) {
         <li className="semiBold font15 pointer">
           <Link
             onClick={() => toggleSidebar(!sidebaropen)}
-            activeClass="active"
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="/discover"
@@ -51,7 +49,6 @@ export default function Sidebar({ sidebaropen, toggleSidebar, currentUser }) {
         <li className="semiBold font15 pointer">
           <Link
             onClick={() => toggleSidebar(!sidebaropen)}
-            activeClass="active"
             className="whiteColor"
             style={{ padding: "10px 15px" }}
             to="/bookshelf"
@@ -90,7 +87,7 @@ const Wrapper = styled.nav`
   position: fixed;
   top: 0;
   padding: 0 30px;
-  right: ${(props) => (props.sidebaropen ? "0px" : "-400px")};
+  right: ${(props) => (props.sidebaropen === "true" ? "0px" : "-400px")};
   z-index: 9999;
   @media (max-width: 400px) {
     width: 100%;
