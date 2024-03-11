@@ -1,12 +1,10 @@
 import React from 'react';
 import { Book } from '../components/book/Book';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Trash from "../assets/svg/Trash";
 import { firestore } from "../firebase/firebase.utils";
 import EmptyIcon from "../assets/svg/Empty";
 import styled from "styled-components";
-import StarRatingComponent from 'react-star-rating-component';
-
+import { Rating } from 'react-simple-star-rating';
 
 class Bookshelf extends React.Component {
     constructor() {
@@ -25,7 +23,7 @@ class Bookshelf extends React.Component {
             const snapshot = await firestore.collection("users").doc(this.props.currentUser.id).collection('books').get();
             const dataBooks = snapshot.docs.map(doc => {
                 const data = doc.data();
-                data.hasRated = data.hasRated || 0; 
+                data.hasRated = data.hasRated || 0;
                 return { id: doc.id, ...data };
             });
             this.setState({ books: dataBooks });
@@ -34,20 +32,17 @@ class Bookshelf extends React.Component {
         }
     }
 
-    handleClickDelete(bookID) {
-        const response = async () => {
-            await (firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).delete()
-                .then(res => {
-                    console.log(res);
-                })
-                .catch((error) => {
-                    console.error("Error deleting a document: ", error);
-                })
-            );
+    handleClickDelete = async (bookID) => {
+        try {
+            await firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).delete();
+
+            const updatedBooks = this.state.books.filter(book => book.id !== bookID);
+
+            this.setState({ books: updatedBooks });
+        } catch (error) {
+            console.error("Error deleting a document: ", error);
         }
-        response();
-        this.componentDidMount()
-    }
+    };
 
     handleClickUpdateRead = async (bookID, rating) => {
         try {
@@ -55,11 +50,11 @@ class Bookshelf extends React.Component {
                 "hasRated": rating
             });
 
-            const books = this.state.books.map(book =>
+            const updatedBooks = this.state.books.map(book =>
                 book.id === bookID ? { ...book, hasRated: rating } : book
             );
 
-            this.setState({ books });
+            this.setState({ books:updatedBooks });
         } catch (error) {
             console.error("Error updating a document: ", error);
         }
@@ -96,16 +91,16 @@ class Bookshelf extends React.Component {
                                 />
                                 <WrapperStarRating>
                                     <HoverableStarRating>
-                                        <StarRatingComponent className="starRating"
-                                            name={"rate" + book.id}
-                                            starCount={5}
-                                            value={book.hasRated}
-                                            starColor="#ffd700"
-                                            emptyStarColor={"grey"}
-                                            onStarClick={(nextValue) => this.handleClickUpdateRead(book.id, nextValue)}
+                                        <Rating
+                                            onClick={(rate) => this.handleClickUpdateRead(book.id, rate)}
+                                            ratingValue={book.hasRated}
+                                            initialValue={book.hasRated}
+                                            size={"28px"}
                                         />
                                     </HoverableStarRating>
-                                    <DeleteIcon icon={faTrash} onClick={() => this.handleClickDelete(book.id)} />
+                                    <DeleteIcon onClick={() => this.handleClickDelete(book.id)} >
+                                        <Trash/>
+                                    </DeleteIcon>
                                 </WrapperStarRating>
                             </div>
                         ))
@@ -124,7 +119,7 @@ class Bookshelf extends React.Component {
 }
 export default Bookshelf;
 
-const WrapperCardList = styled.nav`
+const WrapperCardList = styled.div`
     width: 55vw;
     margin: 100px auto 60px;
     display: flex;
@@ -134,14 +129,14 @@ const WrapperCardList = styled.nav`
     min-height: 70vh;
 `;
 
-const WrapperMessage = styled.nav`
+const WrapperMessage = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%; 
 `;
 
-const WrapperStarRating = styled.nav`
+const WrapperStarRating = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,7 +145,7 @@ const WrapperStarRating = styled.nav`
     gap: 20px;
 `;
 
-const DeleteIcon = styled(FontAwesomeIcon)`
+const DeleteIcon = styled.div`
     cursor: pointer;
     transition: color 0.3s;
     &:hover {

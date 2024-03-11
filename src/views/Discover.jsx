@@ -1,7 +1,7 @@
 import React from 'react';
 import { Book } from '../components/book/Book';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faForward, faHeart } from '@fortawesome/free-solid-svg-icons';
+import Forward from "../assets/svg/Forward";
+import Floppy from "../assets/svg/Floppy";
 import { firestore } from "../firebase/firebase.utils";
 import { Toast, Spinner } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -28,7 +28,7 @@ class Discover extends React.Component {
     this.abortController = new AbortController();
     this.callAPI();
   }
-  
+
   componentWillUnmount() {
     this._isMounted = false;
     this.abortController.abort();
@@ -190,10 +190,10 @@ class Discover extends React.Component {
 
         <ButtonContainer>
           <Button id="btnBookMark" onClick={() => this.handleClickSave()}>
-            {this.state.isLoading ? <Spinner animation="border" size="sm" /> : <>save <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon></>}
+            {this.state.isLoading ? <Spinner /> : <div className='font13'>Save <Floppy /></div>}
           </Button>
           <Button id="btnNext" onClick={() => this.handleClickNext()} disabled={this.state.isLoading}>
-            {this.state.isLoading ? <Spinner animation="border" size="sm" /> : <>next <FontAwesomeIcon icon={faForward}></FontAwesomeIcon></>}
+            {this.state.isLoading ? <Spinner /> : <div className='font13'>Next <Forward /></div>}
           </Button>
         </ButtonContainer>
 
@@ -225,7 +225,8 @@ const HomeContainer = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 `;
 
 const Button = styled.button`
@@ -238,12 +239,12 @@ const Button = styled.button`
   text-decoration: none;
   font-weight: 600;
   display: inline-block;
-  margin: 4px 10px;
+  margin: 20px 10px;
   cursor: pointer;
   background-color: #fff;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    transition: 0.2s ease-in-out;
     text-decoration: underline;
   }
 `;
