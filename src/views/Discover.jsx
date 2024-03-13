@@ -2,9 +2,21 @@ import React from 'react';
 import { Book } from '../components/book/Book';
 import Forward from "../assets/svg/Forward";
 import Floppy from "../assets/svg/Floppy";
+import Gear from "../assets/svg/Gear"
 import { firestore } from "../firebase/firebase.utils";
 import { Toast, Spinner } from 'react-bootstrap';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import config from '../config';
+
+// Import Discover components
+import GetTitleName from '../components/discover/GetTitleName';
+import GetResponse from '../components/discover/GetResponse';
+import GetAuthors from '../components/discover/GetAuthors';
+import GenerateBackground from '../components/discover/GenerateBackground';
+import Button from '../components/discover/Button'
+import SettingsModal from '../components/discover/SettingsModal';
+
+import BookContainer from '../components/book/BookContainer';
 
 class Discover extends React.Component {
   constructor(props) {
@@ -19,8 +31,13 @@ class Discover extends React.Component {
       subject: '',
       genre: '',
       background: '',
-      isLoading: false
+      isLoading: false,
+      showModal: false,
+      author_year_start: 1700,
+      author_year_end: 1800,
+      topics: 'All'
     };
+    this.submitForm = this.submitForm.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +54,20 @@ class Discover extends React.Component {
   handleClickNext() {
     this.callAPI();
   }
+
+  handleDropdownPeriods = (start, end) => {
+    this.setState({
+      author_year_start: start,
+      author_year_end: end
+    });
+  }
+
+  handleDropdownTopics = (topic) => {
+    this.setState({
+      topics: topic
+    });
+  }
+
 
   handleClickSave() {
     if (!this.props.currentUser) {
@@ -67,6 +98,54 @@ class Discover extends React.Component {
     }
   }
 
+  submitForm = async (event) => {
+    event.preventDefault();
+    this.setState({ book: [], books: [] }, async () => {
+      await this.callAPI();
+      this.setState({ showModal: false });
+    });
+  };
+
+  callAPI = async () => {
+    this.setState({ isLoading: true });
+    if (this.state.books && this.state.books.length > 0) {
+      this.selectRandomBook();
+    } else {
+      await this.fetchRandomPage();
+    }
+  }
+
+  fetchRandomPage = async () => {
+    const topicParam = this.state.topics === 'All' ? '' : `topic=${this.state.topics}&`;
+    const pageNumber = this.state.topics === 'All' ? Math.floor(Math.random() * 15) : 1;
+
+    const URL = `${config.baseUrl}?` +
+      `author_year_start=${this.state.author_year_start}&` +
+      `author_year_end=${this.state.author_year_end}&` +
+      topicParam +
+      `page=${pageNumber}`;
+
+    fetch(URL, { signal: this.abortController.signal })
+      .then(response => response.json())
+      .then(
+        (response) => {
+          if (response && response.results && response.results.length > 0) {
+            // Save all the books in the React state.
+            this.setState({ books: response.results }, this.selectRandomBook);
+          } else {
+            // Recall the API if no results are found.
+            this.fetchRandomPage();
+          }
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      );
+  };
+
   selectRandomBook() {
     if (this.state.books.length > 0) {
       const randomBookIndex = Math.floor(Math.random() * this.state.books.length);
@@ -74,121 +153,46 @@ class Discover extends React.Component {
       const remainingBooks = this.state.books.filter((book, index) => index !== randomBookIndex);
       this.setState({
         book: bookData,
-        title: this.getTitleName(bookData.title),
-        authors: this.getAuthors(bookData.authors),
-        subject: this.getRepsonse(bookData.subjects),
-        genre: this.getRepsonse(bookData.bookshelves),
-        background: this.generateBackground(),
+        title: GetTitleName(bookData.title),
+        authors: GetAuthors(bookData.authors),
+        subject: GetResponse(bookData.subjects),
+        genre: GetResponse(bookData.bookshelves),
+        background: GenerateBackground(),
         books: remainingBooks,
         isLoading: false,
       }, () => {
         // checking if there are no more books left in the state
         if (this.state.books.length === 0) {
-          // if so, fetch a new set of books
-          this.callAPI();
+          this.setState({ topics: "All" }, async () => {
+            await this.callAPI();
+          });
         }
       });
     }
   }
 
-  callAPI() {
-    this.setState({ isLoading: true });
-    if (this.state.books && this.state.books.length > 0) {
-      this.selectRandomBook();
-    } else {
-      const fetchRandomPage = () => {
-        const randomPageNumber = Math.floor(Math.random() * 1000) + 1;
-        let URL = `https://gutendex.com/books/?author_year_start=0&languages=en&page=${randomPageNumber}`;
-        fetch(URL, { signal: this.abortController.signal })
-          .then(response => response.json())
-          .then(
-            (response) => {
-              if (response && response.results && response.results.length > 0) {
-                // Save all the books in the React state.
-                this.setState({ books: response.results }, this.selectRandomBook);
-              } else {
-                // Recall the API if no results are found.
-                fetchRandomPage();
-              }
-            },
-            (error) => {
-              this.setState({
-                isLoaded: true,
-                error
-              });
-            }
-          );
-      };
-      fetchRandomPage();
-    }
-  }
-
-  getTitleName(response) {
-    if (response) {
-      return response;
-    }
-    else {
-      return "";
-    }
-  }
-
-  getRepsonse(response) {
-    let tempResponse = "";
-    response.map(function (item, index) {
-      if (index < 2) {
-        item = item.replace(/--/g, '');
-        if (index + 1 === response.length || index + 1 === 2) {
-          tempResponse = tempResponse + item;
-        } else {
-          tempResponse = tempResponse + item + "; ";
-        }
-      }
-      return item;
-    })
-    return tempResponse;
-  }
-
-  getAuthors(response) {
-    let fullName = "";
-    fullName = response.map(function (x, index) {
-      const countComma = (x.name.match(/,/g) || []).length;
-      if (!x.name.includes("(") && !x.name.includes(")") && (countComma === 1)) {
-        let nameArray = x.name.split(', ');
-        if (index + 1 === response.length) {
-          fullName = nameArray[1] + " " + nameArray[0];
-        } else {
-          fullName = nameArray[1] + " " + nameArray[0] + ", "
-        }
-      } else {
-        fullName = x.name;
-      }
-      return fullName;
-    });
-    return fullName;
-  }
-
-  generateBackground() {
-    let background = this.state.background;
-    const getRandomInt = Math.floor(Math.random() * 100) + 155;
-    const getRandomInt2 = Math.floor(Math.random() * 100) + 155;
-    const getRandomInt3 = Math.floor(Math.random() * 100) + 155;
-    background = `${"rgb(" + getRandomInt + "," + getRandomInt2 + "," + getRandomInt3 + ")"}`;
-    return background;
-  }
-
   render() {
     return (
       <HomeContainer>
-        <Book
-          title={this.state.title}
-          authors={this.state.authors}
-          subject={this.state.subject}
-          genre={this.state.genre}
-          background={this.state.background}
-          isLoading={this.isLoading}
-        />
+        {this.state.isLoading ?
+          <BookContainer>
+            <SpinnerBook />
+          </BookContainer>
+          : (
+            <Book
+              title={this.state.title}
+              authors={this.state.authors}
+              subject={this.state.subject}
+              genre={this.state.genre}
+              background={this.state.background}
+              isLoading={this.isLoading}
+            />
+          )}
 
         <ButtonContainer>
+          <Button onClick={() => this.setState({ showModal: true })}>
+            {this.state.isLoading ? <Spinner /> : <div className='font13'>Settings <Gear /></div>}
+          </Button>
           <Button id="btnBookMark" onClick={() => this.handleClickSave()}>
             {this.state.isLoading ? <Spinner /> : <div className='font13'>Save <Floppy /></div>}
           </Button>
@@ -206,11 +210,23 @@ class Discover extends React.Component {
             right: 20,
           }}
         >
-          <Toast.Header className='d-flex justify-content-between font12'>
+        
+        <Toast.Header className='d-flex justify-content-between font12'>
             <strong className="mr-auto">Sign in Reminder</strong>
           </Toast.Header>
           <Toast.Body className='font12'>Please sign in to save the book in the bookshelf.</Toast.Body>
         </Toast>
+
+        <SettingsModal
+          showModal={this.state.showModal}
+          authorYearStart={this.state.author_year_start}
+          authorYearEnd={this.state.author_year_end}
+          topics={this.state.topics}
+          handleDropdownPeriods={this.handleDropdownPeriods}
+          handleDropdownTopics={this.handleDropdownTopics}
+          submitForm={this.submitForm}
+        />
+
       </HomeContainer>
     );
   }
@@ -226,27 +242,21 @@ const HomeContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
-const Button = styled.button`
-  margin-right: 5px;
-  border: none;
-  border-radius: 10px;
-  color: black;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 600;
-  display: inline-block;
-  margin: 20px 10px;
-  cursor: pointer;
-  background-color: #fff;
-  transition: all 0.3s ease-in-out;
+const spinAnimation = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
 
-  &:hover {
-    text-decoration: underline;
-  }
+const SpinnerBook = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #333;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: ${spinAnimation} 1s linear infinite;
 `;
 
 export default Discover;

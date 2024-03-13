@@ -34,11 +34,11 @@ class SignIn extends React.Component {
     };
     render() {
         return (
-            <SignInWrapper className='font12'>
+            <SignInWrapper className='font11'>
                 <TitleWrapper>
-                    <h4>Sign In</h4>
+                    <h5>Sign In</h5>
                 </TitleWrapper>
-                <Form className='font12' onSubmit={this.handleSubmit}>
+                <Form className='font11' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label >Email address</Form.Label>
                         <Form.Control
@@ -48,7 +48,7 @@ class SignIn extends React.Component {
                             placeholder="Enter email"
                             value={this.state.email}
                             onChange={this.handleChange}
-                            className='font12'
+                            className='font11'
                             required
                         />
                     </Form.Group>
@@ -61,15 +61,15 @@ class SignIn extends React.Component {
                             placeholder="Enter password"
                             value={this.state.password}
                             onChange={this.handleChange}
-                            className='font12'
+                            className='font11'
                             label="password"
                             required
                         />
                     </Form.Group>
-                    <button className="btn btn-dark font12" type="submit" style={{ width: '100%' }}>Login</button>
+                    <button className="btn btn-dark font11" type="submit" style={{ width: '100%' }}>Login</button>
                 </Form>
                 {this.state.showAlert && (
-                    <AlertWrapper className="alert alert-danger font12" role="alert">
+                    <AlertWrapper className="alert alert-danger font11" role="alert">
                        {this.state.errorMessage}
                     </AlertWrapper>
                 )}

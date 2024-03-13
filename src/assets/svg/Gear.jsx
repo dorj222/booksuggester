@@ -1,11 +1,10 @@
 import * as React from "react";
-import {default as icon} from './icon/dice-solid.svg'
+import {default as icon} from './icon/gear-solid.svg'
 
-function Forward(props) {
+function Gear(props) {
   return (
     <img src={icon} alt="" style={{height: "20px"}}/>
   );
 }
 
-export default Forward;
-
+export default Gear;
