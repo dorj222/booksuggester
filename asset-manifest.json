@@ -1,20 +1,21 @@
 {
   "files": {
     "main.css": "/booksuggester/static/css/main.6827666a.css",
-    "main.js": "/booksuggester/static/js/main.ab640043.js",
+    "main.js": "/booksuggester/static/js/main.ba549314.js",
     "static/media/rocket.svg": "/booksuggester/static/media/rocket.221d381235cff4046dd599afbc8b06c0.svg",
     "static/media/wave.svg": "/booksuggester/static/media/wave.37fab2d601686a1f5ce01566429757d9.svg",
     "static/media/empty.svg": "/booksuggester/static/media/empty.d8b54aebec93fdf83b956c93284bfcb7.svg",
     "static/media/booksuggester.svg": "/booksuggester/static/media/booksuggester.cd4082c51925227c2953c8290d3e50dd.svg",
+    "static/media/gear-solid.svg": "/booksuggester/static/media/gear-solid.cfdf571861a35041b0cde4b97a1b0e94.svg",
+    "static/media/dice-solid.svg": "/booksuggester/static/media/dice-solid.76a54f65750888792ff8f04d05617c6e.svg",
     "index.html": "/booksuggester/index.html",
-    "static/media/forward-solid.svg": "/booksuggester/static/media/forward-solid.e7994c8dc2b304d052c2d1921b513840.svg",
     "static/media/floppy-disk-solid.svg": "/booksuggester/static/media/floppy-disk-solid.0bc423ea589c221b614765ce0ab1662f.svg",
     "static/media/trash-solid.svg": "/booksuggester/static/media/trash-solid.16207fda462567fa761c8bb0c7319486.svg",
     "main.6827666a.css.map": "/booksuggester/static/css/main.6827666a.css.map",
-    "main.ab640043.js.map": "/booksuggester/static/js/main.ab640043.js.map"
+    "main.ba549314.js.map": "/booksuggester/static/js/main.ba549314.js.map"
   },
   "entrypoints": [
     "static/css/main.6827666a.css",
-    "static/js/main.ab640043.js"
+    "static/js/main.ba549314.js"
   ]
 }
