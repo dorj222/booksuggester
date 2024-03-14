@@ -52,7 +52,7 @@ const Wrapper = styled.section`
     padding-top: 50px;
   }
   @media (max-width: 550px) {
-    padding-top: 100px;
+    padding-top: 50px;
   }
 `;
 

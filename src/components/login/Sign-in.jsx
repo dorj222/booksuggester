@@ -34,11 +34,11 @@ class SignIn extends React.Component {
     };
     render() {
         return (
-            <SignInWrapper className='font11'>
+            <SignInWrapper className='font12'>
                 <TitleWrapper>
                     <h5>Sign In</h5>
                 </TitleWrapper>
-                <Form className='font11' onSubmit={this.handleSubmit}>
+                <Form className='font12' onSubmit={this.handleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label >Email address</Form.Label>
                         <Form.Control
@@ -66,10 +66,10 @@ class SignIn extends React.Component {
                             required
                         />
                     </Form.Group>
-                    <button className="btn btn-dark font11" type="submit" style={{ width: '100%' }}>Login</button>
+                    <button className="btn btn-dark font12" type="submit" style={{ width: '100%' }}>Login</button>
                 </Form>
                 {this.state.showAlert && (
-                    <AlertWrapper className="alert alert-danger font11" role="alert">
+                    <AlertWrapper className="alert alert-danger font12" role="alert">
                        {this.state.errorMessage}
                     </AlertWrapper>
                 )}

@@ -4,7 +4,7 @@ import Forward from "../assets/svg/Forward";
 import Floppy from "../assets/svg/Floppy";
 import Gear from "../assets/svg/Gear"
 import { firestore } from "../firebase/firebase.utils";
-import { Toast, Spinner } from 'react-bootstrap';
+import { Toast, Spinner, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import styled, { keyframes } from 'styled-components';
 import config from '../config';
 
@@ -13,7 +13,7 @@ import GetTitleName from '../components/discover/GetTitleName';
 import GetResponse from '../components/discover/GetResponse';
 import GetAuthors from '../components/discover/GetAuthors';
 import GenerateBackground from '../components/discover/GenerateBackground';
-import Button from '../components/discover/DiscoverButton'
+import DiscoverButton from '../components/discover/DiscoverButton'
 import SettingsModal from '../components/discover/SettingsModal';
 
 import BookContainer from '../components/book/BookContainer';
@@ -189,17 +189,31 @@ class Discover extends React.Component {
               isLoading={this.isLoading}
             />
           )}
-
         <ButtonContainer>
-          <Button onClick={() => this.setState({ showModal: true })}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Gear /> Settings</div>}
-          </Button>
-          <Button id="btnBookMark" onClick={() => this.handleClickSave()}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Floppy /> Save</div>}
-          </Button>
-          <Button id="btnNext" onClick={() => this.handleClickNext()} disabled={this.state.isLoading}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Forward /> Next</div>}
-          </Button>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Settings</Tooltip>}
+          >
+            <DiscoverButton onClick={() => this.setState({ showModal: true })}>
+              {this.state.isLoading ? <Spinner /> : <div className='font13'> <Gear /> </div>}
+            </DiscoverButton>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Save</Tooltip>}
+          >
+            <DiscoverButton id="btnBookMark" onClick={() => this.handleClickSave()}>
+              {this.state.isLoading ? <Spinner /> : <div className='font13'> <Floppy /> </div>}
+            </DiscoverButton>
+          </OverlayTrigger>
+          <OverlayTrigger
+            placement="top"
+            overlay={<Tooltip>Next</Tooltip>}
+          >
+            <DiscoverButton id="btnNext" onClick={() => this.handleClickNext()} disabled={this.state.isLoading}>
+              {this.state.isLoading ? <Spinner /> : <div className='font13'> <Forward /> </div>}
+            </DiscoverButton>
+          </OverlayTrigger>
         </ButtonContainer>
 
         <Toast
@@ -211,8 +225,8 @@ class Discover extends React.Component {
             right: 20,
           }}
         >
-        
-        <Toast.Header className='d-flex justify-content-between font12'>
+
+          <Toast.Header className='d-flex justify-content-between font12'>
             <strong className="mr-auto">Sign in Reminder</strong>
           </Toast.Header>
           <Toast.Body className='font12'>Please sign in to save the book in the bookshelf.</Toast.Body>

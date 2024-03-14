@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Dropdown } from 'react-bootstrap';
 import styled from 'styled-components';
-import Button from './DiscoverButton'
+import DropdownButton from './ModalButton'
 
 const SettingsModal = ({ showModal, authorYearStart, authorYearEnd, topics, handleDropdownPeriods, handleDropdownTopics, submitForm }) => (
   <Modal style={{ "marginTop": "200px" }} show={showModal}>
@@ -40,7 +40,7 @@ const SettingsModal = ({ showModal, authorYearStart, authorYearEnd, topics, hand
         </DropdownWrapper>
       </StyledForm>
       <ButtonContainer>
-        <Button onClick={submitForm}>Submit</Button>
+        <DropdownButton onClick={submitForm}>Submit</DropdownButton>
       </ButtonContainer>
     </Modal.Body>
   </Modal>
