@@ -51,7 +51,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 200px;
+  height: 150px;
 `;
 
 const ButtonContainer = styled.div`

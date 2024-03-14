@@ -62,7 +62,7 @@ const LeftSide = styled.div`
   @media (max-width: 960px) {
     width: 75%;
     order: 2;
-    padding-bottom: 50px;
+    padding-bottom: 150px;
     text-align: left;
   }
   @media (max-width: 560px) {
@@ -84,7 +84,7 @@ const Description = styled.div`
   padding: 12px 0 12px 0;
   line-height: 1.5rem;
   @media (max-width: 960px) {
-    padding: 0px 0 10px 0;
+    padding: 0px 0 20px 0;
     text-align: left;
     max-width: 100%;
   }
