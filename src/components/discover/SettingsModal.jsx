@@ -8,9 +8,9 @@ const SettingsModal = ({ showModal, authorYearStart, authorYearEnd, topics, hand
     <Modal.Body>
       <StyledForm>
         <DropdownWrapper>
-          <Label style={{ "marginRight": "20px" }}>Literary Periods: </Label>
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-periods" style={{ width: "200px" }}>
+          <Label className="col-form-label-sm" style={{ "marginRight": "20px" }}>Literary Periods: </Label>
+          <Dropdown variant="btn-sm" >
+            <Dropdown.Toggle variant="secondary btn-sm" id="dropdown-periods" style={{ width: "200px" }} >
               {authorYearStart} - {authorYearEnd}
             </Dropdown.Toggle>
             <Dropdown.Menu className='font12'>
@@ -23,9 +23,9 @@ const SettingsModal = ({ showModal, authorYearStart, authorYearEnd, topics, hand
           </Dropdown>
         </DropdownWrapper>
         <DropdownWrapper>
-          <Label style={{ "marginRight": "20px" }}>Topics: </Label>
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-topic" style={{ width: "200px" }}>
+          <Label className="col-form-label-sm" style={{ "marginRight": "20px" }}>Topics: </Label>
+          <Dropdown variant="btn-sm" >
+            <Dropdown.Toggle variant="secondary btn-sm" id="dropdown-topic" style={{ width: "200px" }}>
               {topics}
             </Dropdown.Toggle>
             <Dropdown.Menu className='font12'>

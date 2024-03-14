@@ -1,12 +1,19 @@
 import React from 'react';
 import { Book } from '../components/book/Book';
-import Trash from "../assets/svg/Trash";
 import { firestore } from "../firebase/firebase.utils";
 import EmptyIcon from "../assets/svg/Empty";
 import styled from "styled-components";
 import { Rating } from 'react-simple-star-rating';
-import { Form } from 'react-bootstrap';
+import { Form, Dropdown } from 'react-bootstrap';
 import Fuse from 'fuse.js'
+
+// import svg icons
+import RandomIcon from "../assets/svg/RandomIcon";
+import Trash from "../assets/svg/Trash";
+import Sort from "../assets/svg/Sort";
+import Alphabetical from "../assets/svg/Alphabetical"
+import RatingIcon from '../assets/svg/RatingIcon';
+import CreatedIcon from '../assets/svg/CreatedIcon';
 
 class Bookshelf extends React.Component {
     constructor() {
@@ -15,7 +22,8 @@ class Bookshelf extends React.Component {
             books: [],
             hasHoveredOver: false,
             searchQuery: '',
-            filteredBooks: []
+            filteredBooks: [],
+            sort: 'Title'
         }
     };
 
@@ -30,7 +38,7 @@ class Bookshelf extends React.Component {
                 data.hasRated = data.hasRated || 0;
                 return { id: doc.id, ...data };
             });
-            this.setState({ books: dataBooks, filteredBooks: dataBooks });
+            this.setState({ books: dataBooks, filteredBooks: dataBooks }, this.sortBooks);
         } catch (error) {
             console.error("Error fetching books:", error);
         }
@@ -77,6 +85,34 @@ class Bookshelf extends React.Component {
         });
     };
 
+    handleSort = (sortOption) => {
+        this.setState({ sort: sortOption }, this.sortBooks);
+    };
+
+    sortBooks = () => {
+        let sortedBooks = [...this.state.books]; // copy the current books array
+        // update this copy based on this.state.sort
+        switch (this.state.sort) {
+          case 'date':
+            sortedBooks.sort((a, b) => b.createdAt - a.createdAt);
+            break;
+          case 'rating':
+            sortedBooks.sort((a, b) => b.hasRated - a.hasRated);
+            break;
+          case 'alpha':
+            sortedBooks.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+          case 'random':
+            sortedBooks.sort(() => 0.5 - Math.random());
+            break;
+          default:
+            // do nothing
+            break;
+        }
+        // set the state with the sorted books
+        this.setState({ filteredBooks: sortedBooks });
+      };
+
     render() {
         const { books } = this.state;
         if (!this.props.currentUser) {
@@ -94,19 +130,35 @@ class Bookshelf extends React.Component {
         else {
             return (
                 <WrapperContainer>
-                   <WrapperForm>
-                        <Form>
-                            <Form.Group controlId="search">
-                                <Form.Control
-                                type="text"
-                                placeholder="Search..."
-                                className='font11'
-                                value={this.state.searchQuery}
-                                onChange={this.handleSearch}
-                                />
-                            </Form.Group>
-                        </Form>
-                    </WrapperForm>
+                    <WrapperFilters>
+                        <WrapperForm>
+                            <Form>
+                                <Form.Group controlId="search">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Search..."
+                                        className='font11'
+                                        value={this.state.searchQuery}
+                                        onChange={this.handleSearch}
+                                    />
+                                </Form.Group>
+                            </Form>
+                        </WrapperForm>
+
+                        <WrapperDropdown>
+                            <Dropdown variant="btn-sm">
+                                <Dropdown.Toggle variant="secondary btn-sm">
+                                    {<Sort />}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu className='font12'>
+                                    <Dropdown.Item onClick={() => this.handleSort('date')} className='font12'> <CreatedIcon/>  Created</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('rating')} className='font12'> <RatingIcon/>  Rating</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('alpha')} className='font12'> <Alphabetical/>  Alphabetical</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('random')} className='font12'> <RandomIcon/>  Random</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </WrapperDropdown>
+                    </WrapperFilters>
                     <WrapperCardList>
                         {this.props.currentUser && books.length > 0 ? (
                             this.state.filteredBooks.map(book => (
@@ -168,7 +220,7 @@ const WrapperMessage = styled.div`
     width: 100%; 
 `;
 
-const WrapperContainer= styled.div`
+const WrapperContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -185,8 +237,20 @@ const WrapperStarRating = styled.div`
     gap: 20px;
 `;
 
+const WrapperFilters = styled.div`
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
 const WrapperForm = styled.div`
-    width: 40vw;
+    width: 30%; 
+`;
+
+const WrapperDropdown = styled.div`
+    margin-left: 20px;
 `;
 
 const DeleteIcon = styled.div`

@@ -86,6 +86,7 @@ class Discover extends React.Component {
                 "genre": this.state.genre,
                 "background": this.state.background,
                 "hasRated": false,
+                "createAt": Date()
               }
             );
           }
