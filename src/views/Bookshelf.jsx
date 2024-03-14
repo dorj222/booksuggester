@@ -5,6 +5,8 @@ import { firestore } from "../firebase/firebase.utils";
 import EmptyIcon from "../assets/svg/Empty";
 import styled from "styled-components";
 import { Rating } from 'react-simple-star-rating';
+import { Form } from 'react-bootstrap';
+import Fuse from 'fuse.js'
 
 class Bookshelf extends React.Component {
     constructor() {
@@ -12,6 +14,8 @@ class Bookshelf extends React.Component {
         this.state = {
             books: [],
             hasHoveredOver: false,
+            searchQuery: '',
+            filteredBooks: []
         }
     };
 
@@ -26,7 +30,7 @@ class Bookshelf extends React.Component {
                 data.hasRated = data.hasRated || 0;
                 return { id: doc.id, ...data };
             });
-            this.setState({ books: dataBooks });
+            this.setState({ books: dataBooks, filteredBooks: dataBooks });
         } catch (error) {
             console.error("Error fetching books:", error);
         }
@@ -54,10 +58,23 @@ class Bookshelf extends React.Component {
                 book.id === bookID ? { ...book, hasRated: rating } : book
             );
 
-            this.setState({ books:updatedBooks });
+            this.setState({ books: updatedBooks });
         } catch (error) {
             console.error("Error updating a document: ", error);
         }
+    };
+
+    handleSearch = (event) => {
+        const searchQuery = event.target.value;
+        this.setState({ searchQuery }, () => {
+            if (searchQuery.trim() === '') {
+                this.setState({ filteredBooks: this.state.books });
+            } else {
+                const fuse = new Fuse(this.state.books, { keys: ['title'] });
+                const filteredBooks = fuse.search(searchQuery).map(result => result.item);
+                this.setState({ filteredBooks });
+            }
+        });
     };
 
     render() {
@@ -76,43 +93,58 @@ class Bookshelf extends React.Component {
         }
         else {
             return (
-                <WrapperCardList>
-                    {this.props.currentUser && books.length > 0 ? (
-                        books.map(book => (
-                            <div key={book.id}>
-                                <Book
-                                    key={book.id}
-                                    className="book"
-                                    title={book.title}
-                                    authors={book.authors}
-                                    subject={book.subject}
-                                    genre={book.genre}
-                                    background={book.background}
+                <WrapperContainer>
+                   <WrapperForm>
+                        <Form>
+                            <Form.Group controlId="search">
+                                <Form.Control
+                                type="text"
+                                placeholder="Search..."
+                                className='font11'
+                                value={this.state.searchQuery}
+                                onChange={this.handleSearch}
                                 />
-                                <WrapperStarRating>
-                                    <HoverableStarRating>
-                                        <Rating
-                                            onClick={(rate) => this.handleClickUpdateRead(book.id, rate)}
-                                            ratingValue={book.hasRated}
-                                            initialValue={book.hasRated}
-                                            size={"28px"}
-                                        />
-                                    </HoverableStarRating>
-                                    <DeleteIcon onClick={() => this.handleClickDelete(book.id)} >
-                                        <Trash/>
-                                    </DeleteIcon>
-                                </WrapperStarRating>
-                            </div>
-                        ))
-                    ) : (
-                        <WrapperMessage>
-                            <div className='flexColumn flexCenter'>
-                                <EmptyIcon />
-                                <span className='font20'>No books found</span>
-                            </div>
-                        </WrapperMessage>
-                    )}
-                </WrapperCardList>
+                            </Form.Group>
+                        </Form>
+                    </WrapperForm>
+                    <WrapperCardList>
+                        {this.props.currentUser && books.length > 0 ? (
+                            this.state.filteredBooks.map(book => (
+                                <div key={book.id}>
+                                    <Book
+                                        key={book.id}
+                                        className="book"
+                                        title={book.title}
+                                        authors={book.authors}
+                                        subject={book.subject}
+                                        genre={book.genre}
+                                        background={book.background}
+                                    />
+                                    <WrapperStarRating>
+                                        <HoverableStarRating>
+                                            <Rating
+                                                onClick={(rate) => this.handleClickUpdateRead(book.id, rate)}
+                                                ratingValue={book.hasRated}
+                                                initialValue={book.hasRated}
+                                                size={"28px"}
+                                            />
+                                        </HoverableStarRating>
+                                        <DeleteIcon onClick={() => this.handleClickDelete(book.id)} >
+                                            <Trash />
+                                        </DeleteIcon>
+                                    </WrapperStarRating>
+                                </div>
+                            ))
+                        ) : (
+                            <WrapperMessage>
+                                <div className='flexColumn flexCenter'>
+                                    <EmptyIcon />
+                                    <span className='font20'>No books found</span>
+                                </div>
+                            </WrapperMessage>
+                        )}
+                    </WrapperCardList>
+                </WrapperContainer>
             );
         }
     }
@@ -121,7 +153,7 @@ export default Bookshelf;
 
 const WrapperCardList = styled.div`
     width: 55vw;
-    margin: 100px auto 60px;
+    margin: 50px auto 60px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center; 
@@ -136,6 +168,14 @@ const WrapperMessage = styled.div`
     width: 100%; 
 `;
 
+const WrapperContainer= styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 120px;
+`;
+
 const WrapperStarRating = styled.div`
     display: flex;
     justify-content: center;
@@ -143,6 +183,10 @@ const WrapperStarRating = styled.div`
     margin-top: 10px;
     width: 100%; 
     gap: 20px;
+`;
+
+const WrapperForm = styled.div`
+    width: 40vw;
 `;
 
 const DeleteIcon = styled.div`
@@ -165,3 +209,4 @@ const HoverableStarRating = styled.div`
         opacity: 0.7;
     }
 `;
+

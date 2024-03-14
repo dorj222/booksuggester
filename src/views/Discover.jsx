@@ -13,7 +13,7 @@ import GetTitleName from '../components/discover/GetTitleName';
 import GetResponse from '../components/discover/GetResponse';
 import GetAuthors from '../components/discover/GetAuthors';
 import GenerateBackground from '../components/discover/GenerateBackground';
-import Button from '../components/discover/Button'
+import Button from '../components/discover/DiscoverButton'
 import SettingsModal from '../components/discover/SettingsModal';
 
 import BookContainer from '../components/book/BookContainer';
@@ -191,13 +191,13 @@ class Discover extends React.Component {
 
         <ButtonContainer>
           <Button onClick={() => this.setState({ showModal: true })}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'>Settings <Gear /></div>}
+            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Gear /> Settings</div>}
           </Button>
           <Button id="btnBookMark" onClick={() => this.handleClickSave()}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'>Save <Floppy /></div>}
+            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Floppy /> Save</div>}
           </Button>
           <Button id="btnNext" onClick={() => this.handleClickNext()} disabled={this.state.isLoading}>
-            {this.state.isLoading ? <Spinner /> : <div className='font13'>Next <Forward /></div>}
+            {this.state.isLoading ? <Spinner /> : <div className='font13'> <Forward /> Next</div>}
           </Button>
         </ButtonContainer>
 

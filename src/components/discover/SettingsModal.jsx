@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Dropdown } from 'react-bootstrap';
 import styled from 'styled-components';
-import Button from './Button'
+import Button from './DiscoverButton'
 
 const SettingsModal = ({ showModal, authorYearStart, authorYearEnd, topics, handleDropdownPeriods, handleDropdownTopics, submitForm }) => (
   <Modal style={{ "marginTop": "200px" }} show={showModal}>
