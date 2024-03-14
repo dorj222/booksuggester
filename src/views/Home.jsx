@@ -76,7 +76,7 @@ const RightSide = styled.div`
   @media (max-width: 960px) {
     width: 60%;
     order: 1;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 `;
 const Description = styled.div`
@@ -84,7 +84,7 @@ const Description = styled.div`
   padding: 12px 0 12px 0;
   line-height: 1.5rem;
   @media (max-width: 960px) {
-    padding: 15px 0 50px 0;
+    padding: 0px 0 10px 0;
     text-align: left;
     max-width: 100%;
   }
