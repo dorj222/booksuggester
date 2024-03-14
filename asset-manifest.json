@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/booksuggester/static/css/main.ed3dd3e6.css",
-    "main.js": "/booksuggester/static/js/main.e5dcbd35.js",
+    "main.js": "/booksuggester/static/js/main.2092d043.js",
     "static/media/rocket.svg": "/booksuggester/static/media/rocket.221d381235cff4046dd599afbc8b06c0.svg",
     "static/media/dice-solid.svg": "/booksuggester/static/media/dice-solid.f86902b205c6a8d89d7ac2f60436a0fb.svg",
     "static/media/wave.svg": "/booksuggester/static/media/wave.37fab2d601686a1f5ce01566429757d9.svg",
@@ -16,10 +16,10 @@
     "static/media/star.svg": "/booksuggester/static/media/star.9ea9493b0c1d86df818921e47962d5c5.svg",
     "static/media/trash-solid.svg": "/booksuggester/static/media/trash-solid.16207fda462567fa761c8bb0c7319486.svg",
     "main.ed3dd3e6.css.map": "/booksuggester/static/css/main.ed3dd3e6.css.map",
-    "main.e5dcbd35.js.map": "/booksuggester/static/js/main.e5dcbd35.js.map"
+    "main.2092d043.js.map": "/booksuggester/static/js/main.2092d043.js.map"
   },
   "entrypoints": [
     "static/css/main.ed3dd3e6.css",
-    "static/js/main.e5dcbd35.js"
+    "static/js/main.2092d043.js"
   ]
 }
