@@ -67,7 +67,7 @@ class SignUp extends React.Component {
                             placeholder="Username"
                             value={displayName}
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             required
                         />
                     </Form.Group>
@@ -81,7 +81,7 @@ class SignUp extends React.Component {
                             placeholder="Enter email"
                             value={email}
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             required
                         />
                     </Form.Group>
@@ -95,7 +95,7 @@ class SignUp extends React.Component {
                             value={password}
                             minLength="6"
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             label="password"
                             required
                         />
@@ -110,7 +110,7 @@ class SignUp extends React.Component {
                             value={confirmPassword}
                             minLength="6"
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             label="Confirm Password"
                             required
                         />

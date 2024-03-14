@@ -187,7 +187,7 @@ body {
   font-size: 2.5rem;
 }
 .font60 {
-  font-size: 3.75rem;
+  font-size: 3.25rem;
 }
 /* Form */
 .loginForm {
@@ -195,7 +195,7 @@ body {
 }
 @media only screen and (max-width: 1200px) {
   .font60 {
-    font-size: 2.2rem;
+    font-size: 1.8em !important;
   }
 }
 @media only screen and (max-width: 900px) {
@@ -227,10 +227,10 @@ body {
     font-size: 1.5rem;
   }
   .font40 {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
   }
   .font60 {
-    font-size: 1.9rem;
+    font-size: 1.7rem;
   }
 }
 /* BORDER RADIUS */

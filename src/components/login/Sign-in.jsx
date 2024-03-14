@@ -48,7 +48,7 @@ class SignIn extends React.Component {
                             placeholder="Enter email"
                             value={this.state.email}
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             required
                         />
                     </Form.Group>
@@ -61,7 +61,7 @@ class SignIn extends React.Component {
                             placeholder="Enter password"
                             value={this.state.password}
                             onChange={this.handleChange}
-                            className='font11'
+                            className='form-control-sm' 
                             label="password"
                             required
                         />

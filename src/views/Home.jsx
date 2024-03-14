@@ -60,13 +60,14 @@ const LeftSide = styled.div`
   width: 50%;
   height: 100%;
   @media (max-width: 960px) {
-    width: 65%;
+    width: 75%;
     order: 2;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
     text-align: left;
   }
   @media (max-width: 560px) {
-    margin: 0px 0 150px 0;
+    width: 95%;
+    margin-bottom: 50px;
   }
 `;
 const RightSide = styled.div`

@@ -36,7 +36,6 @@ const LoginWrapper = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
-
     .content {
         text-align: center;
         width: 90%;
@@ -46,20 +45,19 @@ const LoginWrapper = styled.div`
         border-radius: 5px;
         padding: 20px;
     }
-
     .form {
         width: 100%;
-        margin-bottom: 20px;
     }
-
     .toggleButton {
         text-align: center;
     }
+    @media (max-width: 1400px) {
+        margin-top: 40px;
+      }
 `;
 
 const SignUpText = styled.div`
     text-align: center;
-    margin-top: 20px;
 `;
 
 const Button = styled.button`
