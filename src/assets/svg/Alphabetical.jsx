@@ -1,8 +1,8 @@
-import {default as logo} from './icon/alph.svg'
+import {default as logo} from './icon/sort-alph.svg'
 
 function Alphabetical(props) {
   return (
-    <img src={logo} alt="" style={{height: "20px"}}/>
+    <img src={logo} alt="" style={{height: "18px"}}/>
   );
 }
 

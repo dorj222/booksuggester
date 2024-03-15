@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Backdrop from "../../assets/svg/Backdrop";
 import LogoIcon from "../../assets/svg/Logo";
 import BurgerIcon from "../../assets/svg/BurgerIcon";
 import { auth } from '../../firebase/firebase.utils';
 
-export default function TopNavbar(props) { 
-  const { currentUser } = props; 
+export default function TopNavbar({ currentUser }) { 
   const [y, setY] = useState(window.scrollY);
   const [sidebaropen, toggleSidebar] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    window.addEventListener("scroll", () => setY(window.scrollY));
-    return () => {
-      window.removeEventListener("scroll", () => setY(window.scrollY));
+    const handleScroll = () => {
+      setY(window.scrollY);
     };
-  }, [y]);
+
+    // Check if window object is defined (running in the browser)
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, []);
 
   return (
     <>
@@ -34,21 +42,21 @@ export default function TopNavbar(props) {
           </BurgerWrapper>
           <NavLinks>
             <li>
-              <StyledNavLink exact to="/" className={window.location.pathname === "/" ? "active" : ""}>Home</StyledNavLink>
+              <StyledNavLink exact to="/" isActive={() => location.pathname === "/"}>Home</StyledNavLink>
             </li>
             <li>
-              <StyledNavLink to="/discover" className={window.location.pathname === "/discover" ? "active" : ""}>Discover</StyledNavLink>
+              <StyledNavLink to="/discover" isActive={() => location.pathname === "/discover"}>Discover</StyledNavLink>
             </li>
             <li>
-              <StyledNavLink to="/bookshelf" className={window.location.pathname === "/bookshelf" ? "active" : ""}>Bookshelf</StyledNavLink>
+              <StyledNavLink to="/bookshelf" isActive={() => location.pathname === "/bookshelf"}>Bookshelf</StyledNavLink>
             </li>
             {currentUser ? (
               <li>
-                <StyledNavLink to="/login" className={window.location.pathname === "/login" ? "active" : ""} onClick={() => auth.signOut()}>Logout</StyledNavLink>
+                <StyledNavLink to="/login" isActive={() => location.pathname === "/login"} onClick={() => auth.signOut()}>Logout</StyledNavLink>
               </li>
             ) : (
               <li>
-                <StyledNavLink to="/login" className={window.location.pathname === "/login" ? "active" : ""}>Login</StyledNavLink>
+                <StyledNavLink to="/login" isActive={() => location.pathname === "/login"}>Login</StyledNavLink>
               </li>
             )}
           </NavLinks>

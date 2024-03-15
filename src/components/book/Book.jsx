@@ -25,7 +25,6 @@ class Book extends Component {
         style={{ backgroundColor: background }}
         onMouseEnter={this.toggleHoverState}
         onMouseLeave={this.toggleHoverState}
-        showinfo={showInfo ? 'true' : 'false'}
       >
         <ContentContainer>
           {!showInfo ? (

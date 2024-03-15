@@ -47,10 +47,9 @@ class Bookshelf extends React.Component {
     handleClickDelete = async (bookID) => {
         try {
             await firestore.collection("users").doc(this.props.currentUser.id).collection("books").doc(bookID).delete();
-
             const updatedBooks = this.state.books.filter(book => book.id !== bookID);
-
-            this.setState({ books: updatedBooks });
+            const updatedFilteredBooks = this.state.filteredBooks.filter(book => book.id !== bookID);
+            this.setState({ books: updatedBooks, filteredBooks: updatedFilteredBooks });
         } catch (error) {
             console.error("Error deleting a document: ", error);
         }
@@ -93,25 +92,25 @@ class Bookshelf extends React.Component {
         let sortedBooks = [...this.state.books]; // copy the current books array
         // update this copy based on this.state.sort
         switch (this.state.sort) {
-          case 'date':
-            sortedBooks.sort((a, b) => b.createdAt - a.createdAt);
-            break;
-          case 'rating':
-            sortedBooks.sort((a, b) => b.hasRated - a.hasRated);
-            break;
-          case 'alpha':
-            sortedBooks.sort((a, b) => a.title.localeCompare(b.title));
-            break;
-          case 'random':
-            sortedBooks.sort(() => 0.5 - Math.random());
-            break;
-          default:
-            // do nothing
-            break;
+            case 'date':
+                sortedBooks.sort((a, b) => b.createdAt - a.createdAt);
+                break;
+            case 'rating':
+                sortedBooks.sort((a, b) => b.hasRated - a.hasRated);
+                break;
+            case 'alpha':
+                sortedBooks.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+            case 'random':
+                sortedBooks.sort(() => 0.5 - Math.random());
+                break;
+            default:
+                // do nothing
+                break;
         }
         // set the state with the sorted books
         this.setState({ filteredBooks: sortedBooks });
-      };
+    };
 
     render() {
         const { books } = this.state;
@@ -151,20 +150,20 @@ class Bookshelf extends React.Component {
                                     {<Sort />}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu className='font12'>
-                                    <Dropdown.Item onClick={() => this.handleSort('date')} className='font12'> <CreatedIcon/>  Created</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleSort('rating')} className='font12'> <RatingIcon/>  Rating</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleSort('alpha')} className='font12'> <Alphabetical/>  Alphabetical</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => this.handleSort('random')} className='font12'> <RandomIcon/>  Random</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('date')} className='font12'> <CreatedIcon />  Created</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('rating')} className='font12'> <RatingIcon />  Rating</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('alpha')} className='font12'> <Alphabetical />  Alphabetical</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.handleSort('random')} className='font12'> <RandomIcon />  Random</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </WrapperDropdown>
                     </WrapperFilters>
                     <WrapperCardList>
                         {this.props.currentUser && books.length > 0 ? (
-                            this.state.filteredBooks.map(book => (
-                                <div key={book.id}>
+                            this.state.filteredBooks.map((book, index) => (
+                                <div key={`wrapper-${index}`}>
                                     <Book
-                                        key={book.id}
+                                        key={`book-${index}`}
                                         className="book"
                                         title={book.title}
                                         authors={book.authors}
@@ -273,4 +272,3 @@ const HoverableStarRating = styled.div`
         opacity: 0.7;
     }
 `;
-
