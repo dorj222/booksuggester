@@ -1,25 +1,26 @@
 {
   "files": {
     "main.css": "/booksuggester/static/css/main.ed3dd3e6.css",
-    "main.js": "/booksuggester/static/js/main.1f56836b.js",
+    "main.js": "/booksuggester/static/js/main.ac284e6b.js",
     "static/media/rocket.svg": "/booksuggester/static/media/rocket.221d381235cff4046dd599afbc8b06c0.svg",
     "static/media/dice-solid.svg": "/booksuggester/static/media/dice-solid.f86902b205c6a8d89d7ac2f60436a0fb.svg",
     "static/media/wave.svg": "/booksuggester/static/media/wave.37fab2d601686a1f5ce01566429757d9.svg",
     "static/media/empty.svg": "/booksuggester/static/media/empty.d8b54aebec93fdf83b956c93284bfcb7.svg",
     "static/media/gear-solid.svg": "/booksuggester/static/media/gear-solid.37ee32abde6a49398c42354170f37562.svg",
+    "static/media/dice.svg": "/booksuggester/static/media/dice.abf8e1db410e4103e62c46605fbae4c4.svg",
     "static/media/booksuggester.svg": "/booksuggester/static/media/booksuggester.cd4082c51925227c2953c8290d3e50dd.svg",
+    "static/media/rating-star.svg": "/booksuggester/static/media/rating-star.d41bc86f4b3a65599aa84a6a4ce0e894.svg",
+    "static/media/calendar.svg": "/booksuggester/static/media/calendar.73aaa97e0536b97f81857c2d1b757937.svg",
     "static/media/floppy-disk-solid.svg": "/booksuggester/static/media/floppy-disk-solid.c87e40eb52d0d26128b3ef3c4528fc06.svg",
-    "static/media/alph.svg": "/booksuggester/static/media/alph.2a383477cd13ceee31a72d3ab505e1d8.svg",
+    "static/media/sort-alph.svg": "/booksuggester/static/media/sort-alph.5e33dbe2f71064af4282f533d0ac51c7.svg",
     "static/media/sort.svg": "/booksuggester/static/media/sort.82008bd9d6bc443b229ac2828c981bbe.svg",
     "index.html": "/booksuggester/index.html",
-    "static/media/created.svg": "/booksuggester/static/media/created.5ab96586075ca6b32e7d36d735874394.svg",
-    "static/media/star.svg": "/booksuggester/static/media/star.9ea9493b0c1d86df818921e47962d5c5.svg",
     "static/media/trash-solid.svg": "/booksuggester/static/media/trash-solid.16207fda462567fa761c8bb0c7319486.svg",
     "main.ed3dd3e6.css.map": "/booksuggester/static/css/main.ed3dd3e6.css.map",
-    "main.1f56836b.js.map": "/booksuggester/static/js/main.1f56836b.js.map"
+    "main.ac284e6b.js.map": "/booksuggester/static/js/main.ac284e6b.js.map"
   },
   "entrypoints": [
     "static/css/main.ed3dd3e6.css",
-    "static/js/main.1f56836b.js"
+    "static/js/main.ac284e6b.js"
   ]
 }
