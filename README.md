@@ -35,4 +35,6 @@ npm start
 ```
 
 ## Demo
-<img src="https://github.com/dorj222/booksuggester/assets/26856199/7bc1b2ec-3ca2-4617-a193-0b5c3527d450" alt="booksuggester" width="300" height="auto">
+<div style="text-align: center;">
+    <img src="https://github.com/dorj222/booksuggester/assets/26856199/7bc1b2ec-3ca2-4617-a193-0b5c3527d450" alt="booksuggester" width="400" height="auto">
+</div>
