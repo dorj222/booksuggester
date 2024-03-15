@@ -13,15 +13,17 @@ class SignUp extends React.Component {
             email: '',
             password: '',
             confirmPassword: '',
-            showAlert: false // Add state variable for controlling the alert
+            emailExists: false,
+            passWordMismatch: false
         }
     }
 
     handleSubmit = async event => {
         event.preventDefault();
+        this.setState({ passWordMismatch: false, emailExists: false})
         const { displayName, email, password, confirmPassword } = this.state;
         if (password !== confirmPassword) {
-            alert("Passwords don't match!");
+            this.setState({ passWordMismatch: true});
             return;
         }
         try {
@@ -33,13 +35,14 @@ class SignUp extends React.Component {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                showAlert: false // Reset showAlert state
+                emailExists: false,
+                passWordMismatch: false
             });
             history.push("/");
         } catch (error) {
             console.error(error.message);
             if (error.message.toString().includes("auth/email-already-in-use")) {
-                this.setState({ showAlert: true }); // Show the alert for email already in use
+                this.setState({ emailExists: true });
             }
         }
     };
@@ -50,7 +53,7 @@ class SignUp extends React.Component {
     }
 
     render() {
-        const { displayName, email, password, confirmPassword, showAlert } = this.state;
+        const { displayName, email, password, confirmPassword, emailExists, passWordMismatch } = this.state;
 
         return (
             <SignUpWrapper>
@@ -118,9 +121,16 @@ class SignUp extends React.Component {
                     <button type="submit" className="btn btn-dark font12" style={{ width: '100%' }}>Sign Up</button>
                 </Form>
                 <AlertWrapper>
-                    {showAlert && (
+                    {emailExists && (
                         <div className="alert alert-danger font12" role="alert">
                             The email address is already in use by another account.
+                        </div>
+                    )}
+                </AlertWrapper>
+                <AlertWrapper>
+                    {passWordMismatch && (
+                        <div className="alert alert-danger font12" role="alert">
+                            Passwords do not match.
                         </div>
                     )}
                 </AlertWrapper>

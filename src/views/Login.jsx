@@ -51,8 +51,8 @@ const LoginWrapper = styled.div`
     .toggleButton {
         text-align: center;
     }
-    @media (max-width: 1400px) {
-        margin-top: 40px;
+    @media (max-width: 1600px) {
+        margin-top: 60px;
       }
 `;
 
